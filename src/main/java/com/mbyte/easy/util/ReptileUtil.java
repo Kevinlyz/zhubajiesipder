@@ -57,37 +57,37 @@ public class ReptileUtil {
             Elements listDiv = doc.getElementsByAttributeValue("class", "witkey-info");
 
             //if(listDiv != null){
-                for (Element text : listDiv) {
+            for (Element text : listDiv) {
 
-                    Elements a = text.getElementsByTag("a");                       //公司名称
-                    Elements s0 = text.getElementsByClass("city-icon");           //所在地区
-                    Elements s1 = text.getElementsByClass("score");               //综合评分
-                    Elements s2 = text.getElementsByAttribute("title");                 //所属类型
-                    Elements s3 = text.getElementsByClass("bz-border");           //信誉度
+                Elements a = text.getElementsByTag("a");                       //公司名称
+                Elements s0 = text.getElementsByClass("city-icon");           //所在地区
+                Elements s1 = text.getElementsByClass("score");               //综合评分
+                Elements s2 = text.getElementsByAttribute("title");                 //所属类型
+                Elements s3 = text.getElementsByClass("bz-border");           //信誉度
 
-                    Zbj zbj = new Zbj();
+                Zbj zbj = new Zbj();
 
-                    zbj.setFenlei(tiaojian1);
+                zbj.setFenlei(tiaojian1);
 
-                    zbj.setName(a.get(1).text());
+                zbj.setName(a.get(1).text());
 
-                    zbj.setAddr(s0.text());
+                zbj.setAddr(s0.text());
 
-                    String html = a.get(1).attr("href");
-                    String ht = "https:";
-                    String link = ht.concat(html);
-                    zbj.setLink(link);
+                String html = a.get(1).attr("href");
+                String ht = "https:";
+                String link = ht.concat(html);
+                zbj.setLink(link);
 
-                    zbj.setType(s2.get(0).html());
+                zbj.setType(s2.get(0).html());
 
-                    zbj.setCredit(s3.text());
+                zbj.setCredit(s3.text());
 
-                    zbj.setScore(s1.get(0).html());
+                zbj.setScore(s1.get(0).html());
 
-                    System.out.println(zbj);
-                    zbjService.save(zbj);
+                System.out.println(zbj);
+                zbjService.save(zbj);
 
-                }
+            }
 
 
             //}

@@ -49,14 +49,14 @@ public class SortController extends BaseController  {
     private HttpServletResponse response;
 
     /**
-    * 查询列表
-    *
-    * @param model
-    * @param pageNo
-    * @param pageSize
-    * @param sort
-    * @return
-    */
+     * 查询列表
+     *
+     * @param model
+     * @param pageNo
+     * @param pageSize
+     * @param sort
+     * @return
+     */
     @RequestMapping
     public String index(Model model,@RequestParam(value = "pageNo", required = false, defaultValue = "1") Integer pageNo,@RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize, String creatdateSpace, Sort sort) {
         Page<Sort> page = new Page<Sort>(pageNo, pageSize);
@@ -163,45 +163,32 @@ public class SortController extends BaseController  {
 //        tit.getInfo(urlTwo,tiaojian1,nameUrl2,zbjService);
 
 
-            //爬取分页的数据
+        //爬取分页的数据
 
-                String urlOne = "https://baoding.zbj.com/search/p/?type=new&kw=" + nameUrl + "&d=3571";
-                ReptileUtil tit = new ReptileUtil();
-                tit.getInfo(urlOne, tiaojian1,zbjService);
-
-
-                    //导出excel
-                    QueryWrapper<Zbj> queryWrapper2 = new QueryWrapper<Zbj>();
-
-                    String sk = "猪八戒信息表";
-                    String[] rowsName = new String[]{"序号","标题","公司名称","地址","链接","类型","信誉度","综合评分"};
-                    String filename1 = "猪八戒信息表";
-                    ExportExcel ex = new ExportExcel(sk,rowsName);
-                    try {
-                        response.setContentType("application/vnd.ms-excel;charset=utf-8");
-                        response.setHeader("Content-Disposition","attachment;filename=" + new String((sk + ".xls").getBytes(),"iso-8859-1"));
-                        List<Zbj> infoList = zbjService.list(queryWrapper2);
-                        ex.exportPersonInfo(filename1,infoList);
-                        ex.saveExcel(response);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                    return null;
-                }
+        String urlOne = "https://baoding.zbj.com/search/p/?type=new&kw=" + nameUrl + "&d=3571";
+        ReptileUtil tit = new ReptileUtil();
+        tit.getInfo(urlOne, tiaojian1,zbjService);
 
 
+        //导出excel
+        QueryWrapper<Zbj> queryWrapper2 = new QueryWrapper<Zbj>();
 
+        String sk = "猪八戒信息表";
+        String[] rowsName = new String[]{"序号","标题","公司名称","地址","链接","类型","信誉度","综合评分"};
+        String filename1 = "猪八戒信息表";
+        ExportExcel ex = new ExportExcel(sk,rowsName);
+        try {
+            response.setContentType("application/vnd.ms-excel;charset=utf-8");
+            response.setHeader("Content-Disposition","attachment;filename=" + new String((sk + ".xls").getBytes(),"iso-8859-1"));
+            List<Zbj> infoList = zbjService.list(queryWrapper2);
+            ex.exportPersonInfo(filename1,infoList);
+            ex.saveExcel(response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-//        String url = "https://baoding.zbj.com/search/p/k" + page + ".html?type=new&kw=" + nameUrl + "d=3571";
-//        //System.out.println(tiaojian);
-//        ReptileUtil tit = new ReptileUtil();
-//        //tit.getTit(url,titleService);
-//        tit.getInfo(url,tiaojian1,zbjService);
-//        //tit.getIn(url,infoService);
-
-
-
+        return null;
+    }
 
 }
 

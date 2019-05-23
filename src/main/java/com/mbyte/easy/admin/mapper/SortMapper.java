@@ -18,7 +18,12 @@ import java.util.List;
  */
 public interface SortMapper extends BaseMapper<Sort> {
 
+
     @Select("<script>"+ " SELECT "+ " * " + " FROM "+ "sort"+ " ORDER BY " + "creatdate DESC" + "</script>")
     IPage<Sort> daoxu(IPage<Sort> page);
+
+    @Select("<script>"+ "SELECT"+ "fenlei,"+ "creatdate"+ "FROM"+ "sort"+ "ORDER BY" + "createdate DESC" + "</script>")
+    List<Sort> getSort(Page<Sort> page);
+
 
 }
