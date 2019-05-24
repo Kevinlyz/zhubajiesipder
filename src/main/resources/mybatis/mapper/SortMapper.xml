@@ -13,6 +13,28 @@
       fenlei, addr, creatdate
   </sql>
 
+    <select id="daoxu" resultMap="BaseResultMap">
+        SELECT
+        id,
+        fenlei,
+        addr,
+        creatdate
+        FROM
+        sort
+        WHERE
+        1=1
+        <if test="fenlei != null and fenlei != ''">
+             and fenlei like '%${fenlei}%'
+        </if>
+        <if test="addr != null and addr != ''">
+            and addr like '%${addr}%'
+        </if>
+        <if test="creatdate != null and creatdate != ''">
+            and creatdate like '%${creatdate}%'
+        </if>
+        ORDER BY creatdate DESC
+    </select>
+
 <!--注意:在打开下面注释的时候，在执行添加和更新操作时，一定要添加事物，否则会造成无法添加和更新-->
 <!--
  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">

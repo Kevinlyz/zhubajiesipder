@@ -47,8 +47,8 @@ public class ZbjController extends BaseController  {
     public String index(Model model,@RequestParam(value = "pageNo", required = false, defaultValue = "1") Integer pageNo,@RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize, Zbj zbj) {
         Page<Zbj> page = new Page<Zbj>(pageNo, pageSize);
         QueryWrapper<Zbj> queryWrapper = new QueryWrapper<Zbj>();
-        if(!ObjectUtils.isEmpty(zbj.getFenlei())) {
-            queryWrapper = queryWrapper.like("fenlei",zbj.getFenlei());
+        if(!ObjectUtils.isEmpty(zbj.getFenleiId())) {
+            queryWrapper = queryWrapper.like("fenlei_id",zbj.getFenleiId());
          }
         if(!ObjectUtils.isEmpty(zbj.getName())) {
             queryWrapper = queryWrapper.like("name",zbj.getName());
@@ -102,7 +102,7 @@ public class ZbjController extends BaseController  {
         return prefix+"edit";
     }
     /**
-    * 修改
+    * 添加
     * @param zbj
     * @return
     */

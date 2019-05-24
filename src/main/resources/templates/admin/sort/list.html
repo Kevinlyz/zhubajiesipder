@@ -37,8 +37,8 @@
                     <div class="cl pd-5 bg-1 bk-gray ">
                         <div class="searchByField">
                                          <input type="input-text" class="input-text" th:value="${searchInfo.fenlei}" name="fenlei" placeholder="搜索分类" sid="fenlei"/>
-<!--                                         <input type="input-text" class="input-text" th:value="${searchInfo.addr}" name="addr" placeholder="搜索所属地区" sid="addr"/>-->
-<!--                                         <input type="input-text" placeholder="搜索创建时间" name="creatdateSpace" th:value="${creatdateSpace}" class="input-text  timeSpace"/>-->
+                                         <input type="input-text" class="input-text" th:value="${searchInfo.addr}" name="addr" placeholder="搜索所属地区" sid="addr"/>
+                                         <input type="input-text" placeholder="搜索创建时间" name="creatdateSpace" th:value="${creatdateSpace}" class="input-text  timeSpace"/>
                             <button type="submit"
                                     class="layui-btn  layui-btn-success radius"><i
                                         class="Hui-iconfont">&#xe665;</i> 搜索
@@ -52,7 +52,7 @@
                             <th width="25"><input type="checkbox" name="" value=""/></th>
                             <th width="25">序号</th>
                                 <th width="40">分类</th>
-<!--                                <th width="40">所属地区</th>-->
+                                <th width="40">所属地区</th>
                                 <th width="40">创建时间</th>
                             <th width="100">操作</th>
                         </tr>
@@ -66,7 +66,7 @@
                                        name="id"/></td>
                             <td th:text="${count.count}"></td>
                                     <td th:text="${sort.fenlei}"></td>
-<!--                                    <td th:text="${sort.addr}"></td>-->
+                                    <td th:text="${sort.addr}"></td>
                                     <td th:text="${#temporals.format(sort.creatdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
                             <td class="td-manage">
                                 <a title="编辑" href="javascript:;"

@@ -9,16 +9,13 @@ import com.mbyte.easy.admin.service.ISortService;
 import com.mbyte.easy.admin.service.IZbjService;
 import com.mbyte.easy.common.controller.BaseController;
 import com.mbyte.easy.common.web.AjaxResult;
-import com.mbyte.easy.util.ChineseCharToEnUtil;
 import com.mbyte.easy.util.ExportExcel;
 import com.mbyte.easy.util.PageInfo;
 import com.mbyte.easy.util.ReptileUtil;
-import com.mbyte.easy.util.ChineseCharToEnUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -49,19 +46,19 @@ public class SortController extends BaseController  {
     private HttpServletResponse response;
 
     /**
-     * 查询列表
-     *
-     * @param model
-     * @param pageNo
-     * @param pageSize
-     * @param sort
-     * @return
-     */
+    * 查询列表
+    *
+    * @param model
+    * @param pageNo
+    * @param pageSize
+    * @param sort
+    * @return
+    */
     @RequestMapping
-    public String index(Model model,@RequestParam(value = "pageNo", required = false, defaultValue = "1") Integer pageNo,@RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize, String creatdateSpace, Sort sort) {
+    public String daoxu(Model model,@RequestParam(value = "pageNo", required = false, defaultValue = "1") Integer pageNo,@RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize, String creatdateSpace, Sort sort,String fenlei,String addr,String creatdate) {
         Page<Sort> page = new Page<Sort>(pageNo, pageSize);
 
-        IPage<Sort> pageInfo = sortService.daoxu(page);
+        IPage<Sort> pageInfo = sortService.daoxu(page,fenlei,addr,creatdate);
         model.addAttribute("creatdateSpace", creatdateSpace);
         model.addAttribute("searchInfo", sort);
         model.addAttribute("pageInfo", new PageInfo(pageInfo));
@@ -117,6 +114,13 @@ public class SortController extends BaseController  {
     @GetMapping("delete/{id}")
     @ResponseBody
     public AjaxResult delete(@PathVariable("id") Long id){
+
+        QueryWrapper<Zbj> queryWrapper = new QueryWrapper<Zbj>();
+        queryWrapper = queryWrapper.eq("fenlei_id",id);
+        zbjService.remove(queryWrapper);
+//        QueryWrapper<Sort> queryWrapper1 = new QueryWrapper<Sort>();
+//        queryWrapper1 = queryWrapper1.eq("id",id);
+//        sortService.remove(queryWrapper1);
         return toAjax(sortService.removeById(id));
     }
     /**
@@ -127,6 +131,10 @@ public class SortController extends BaseController  {
     @PostMapping("deleteAll")
     @ResponseBody
     public AjaxResult deleteAll(@RequestBody List<Long> ids){
+
+        QueryWrapper<Zbj> queryWrapper = new QueryWrapper<Zbj>();
+        queryWrapper = queryWrapper.eq("fenlei_id",ids);
+        zbjService.remove(queryWrapper);
         return toAjax(sortService.removeByIds(ids));
     }
 
@@ -136,42 +144,47 @@ public class SortController extends BaseController  {
      */
     @GetMapping("export")
     @ResponseBody
-    public String export(HttpServletRequest request) {
+    public String export(HttpServletRequest request,Long id) {
 
 
-        String id = request.getParameter("id");
+        System.out.println(id);
         QueryWrapper<Sort> queryWrapper = new QueryWrapper<Sort>();
         queryWrapper = queryWrapper.eq("id",id);
-
         Sort biao = sortService.getOne(queryWrapper);
+
         String tiaojian1 = biao.getFenlei();
-        //String tiaojian2 = biao.getAddr();
+        System.out.println(tiaojian1);
 
+        //将分类进行转码
         String nameUrl = ReptileUtil.urlEncodeURL(tiaojian1);
-        //String nameUrl = ChineseCharToEnUtil.getFirstSpell(tiaojian1);                //将分类条件转码
-        //String nameUrl2 = ChineseCharToEnUtil.getPingYin(tiaojian2);                  //将地区条件转成拼音
-        //String nameUrl3 = ReptileUtil.urlEncodeURL(tiaojian2);                      //将地区条件转码
-        //String nameUrl2 = tiaojian2;
-
-        //System.out.println(tiaojian2+ "========================");
         System.out.println(nameUrl+ "============================");
-        //System.out.println(nameUrl2+ "===========================");
-        //System.out.println(nameUrl3+ "============================");
-
-//        String urlTwo = "https://" + nameUrl2 + ".zbj.com/" + nameUrl + "/p.html?d=" + nameUrl3;
-//        ReptileUtil tit = new ReptileUtil();
-//        tit.getInfo(urlTwo,tiaojian1,nameUrl2,zbjService);
-
-
-        //爬取分页的数据
 
         String urlOne = "https://baoding.zbj.com/search/p/?type=new&kw=" + nameUrl + "&d=3571";
-        ReptileUtil tit = new ReptileUtil();
-        tit.getInfo(urlOne, tiaojian1,zbjService);
+        QueryWrapper <Zbj> queryWrapper1 = new QueryWrapper<Zbj>();
+        queryWrapper1 = queryWrapper1.eq("fenlei_id",id);
+        zbjService.remove(queryWrapper1);
 
+        ReptileUtil tit = new ReptileUtil();
+        tit.geInfo(urlOne,id,zbjService);
+
+        Integer a = tit.sePageUrl(urlOne)[1];
+
+        Integer j = tit.sePageUrl(urlOne)[0];
+        Integer k = tit.sePageUrl(urlOne)[2];
+        System.out.println(a);
+
+        for(int i = 0;i < a;i++){
+
+            Integer h = j+(k*i);
+            String urlTwo = "http://baoding.zbj.com/search/p/k" + h + ".html?type=new&kw=" + nameUrl + "&d=3571";
+            ReptileUtil titTwo = new ReptileUtil();
+            titTwo.geInfo(urlTwo,id,zbjService);
+        }
 
         //导出excel
+        String tableid = request.getParameter("id");
         QueryWrapper<Zbj> queryWrapper2 = new QueryWrapper<Zbj>();
+        queryWrapper2 = queryWrapper2.eq("fenlei_id",tableid);
 
         String sk = "猪八戒信息表";
         String[] rowsName = new String[]{"序号","标题","公司名称","地址","链接","类型","信誉度","综合评分"};

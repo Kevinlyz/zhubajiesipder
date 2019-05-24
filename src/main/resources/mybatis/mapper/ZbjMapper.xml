@@ -3,7 +3,7 @@
 <mapper namespace="com.mbyte.easy.admin.mapper.ZbjMapper">
   <resultMap id="BaseResultMap" type="com.mbyte.easy.admin.entity.Zbj">
       <id column="id" jdbcType="BIGINT" property="id" />
-      <id column="fenlei" jdbcType="VARCHAR" property="fenlei" />
+      <id column="fenlei_id" jdbcType="BIGINT" property="fenleiId" />
       <id column="name" jdbcType="VARCHAR" property="name" />
       <id column="addr" jdbcType="VARCHAR" property="addr" />
       <id column="link" jdbcType="VARCHAR" property="link" />
@@ -14,7 +14,7 @@
   </resultMap>
   <sql id="Base_Column_List">
               id,
-      fenlei, name, addr, link, type, credit, score
+      fenlei_id, name, addr, link, type, credit, score
   </sql>
 
 <!--注意:在打开下面注释的时候，在执行添加和更新操作时，一定要添加事物，否则会造成无法添加和更新-->
@@ -31,9 +31,9 @@
        where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.mbyte.easy.admin.entity.Zbj">
-    insert into zbj (fenlei, name, addr, link, type, credit, score)
+    insert into zbj (fenlei_id, name, addr, link, type, credit, score)
     values (
-         fenlei = #{fenlei,jdbcType=VARCHAR},
+         fenlei_id = #{fenleiId,jdbcType=BIGINT},
          name = #{name,jdbcType=VARCHAR},
          addr = #{addr,jdbcType=VARCHAR},
          link = #{link,jdbcType=VARCHAR},
@@ -46,8 +46,8 @@
   <insert id="insertSelective" parameterType="com.mbyte.easy.admin.entity.Zbj">
     insert into zbj
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="fenlei != null">
-        fenlei,
+      <if test="fenleiId != null">
+        fenlei_id,
       </if>
       <if test="name != null">
         name,
@@ -70,8 +70,8 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
 
-      <if test="fenlei != null">
-        fenlei = #{fenlei,jdbcType=VARCHAR},
+      <if test="fenleiId != null">
+        fenlei_id = #{fenleiId,jdbcType=BIGINT},
       </if>
 
       <if test="name != null">
@@ -103,8 +103,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.mbyte.easy.admin.entity.Zbj">
     update zbj
     <set>
-       <if test="fenlei != null">
-         fenlei = #{fenlei,jdbcType=VARCHAR},
+       <if test="fenleiId != null">
+         fenlei_id = #{fenleiId,jdbcType=BIGINT},
       </if>
        <if test="name != null">
          name = #{name,jdbcType=VARCHAR},
@@ -130,7 +130,7 @@
   <update id="updateByPrimaryKey" parameterType="com.mbyte.easy.admin.entity.Zbj">
     update zbj
     set
-        fenlei = #{fenlei,jdbcType=VARCHAR},
+        fenlei_id = #{fenleiId,jdbcType=BIGINT},
         name = #{name,jdbcType=VARCHAR},
         addr = #{addr,jdbcType=VARCHAR},
         link = #{link,jdbcType=VARCHAR},

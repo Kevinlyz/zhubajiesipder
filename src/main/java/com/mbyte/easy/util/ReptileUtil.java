@@ -2,12 +2,21 @@ package com.mbyte.easy.util;
 
 import com.mbyte.easy.admin.entity.Zbj;
 import com.mbyte.easy.admin.service.IZbjService;
+import org.apache.commons.lang3.ObjectUtils;
 import org.jsoup.*;
 import org.jsoup.nodes.*;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 〈p〉
@@ -19,6 +28,19 @@ import java.net.URLEncoder;
  * @since 1.0.0
  */
 public class ReptileUtil {
+
+
+
+    /**
+     * 字符串中提取数字
+     */
+    public void enNum(String url){
+        String regEx = "[^0-9]";
+        Pattern p = Pattern.compile(regEx);
+        Matcher m = p.matcher(url);
+        System.out.println( m.replaceAll("").trim());
+
+    }
 
     /**
      * 将汉字转码
@@ -38,59 +60,106 @@ public class ReptileUtil {
     }
 
     /**
-     * 爬取方法
-     * @param url
-     * @param tiaojian1
-     * @param zbjService
+     * 爬取分页的url,规则
      */
-    public void getInfo(String url,String tiaojian1,IZbjService zbjService) {
+    public Integer[] sePageUrl(String pageUrl) {
+        Document doc = null;
+        Integer[] arr = new Integer[3];
+        try {
+            doc = Jsoup.connect(pageUrl).get();
+            Elements listDiv = doc.getElementsByAttributeValue("class","pagination");
+            for (Element text: listDiv) {
+                Elements a = text.getElementsByTag("a");
+                Elements p = text.getElementsByTag("p");
 
+                //String y = a.attr("href");
+                String b = a.get(2).attr("href");                 //获取第二页的url
+                String c = a.get(3).attr("href");                 //获取第三页的url
+                System.out.println(b);
+                System.out.println(c);
+
+                String f = p.text();                                           //获取总页数
+                String regEx = "[^0-9]";
+                Pattern pattern = Pattern.compile(regEx);
+                Matcher m = pattern.matcher(b);                                //只保留第二页的数字
+                Matcher n = pattern.matcher(c);                                //只保留第三页的数字
+                Matcher h = pattern.matcher(f);                                //只保留总页数的数字
+
+                String d = m.replaceAll("").trim();               //只保留第二页的数字
+                String e = n.replaceAll("").trim();               //只保留第三页的数字
+                String w = h.replaceAll("").trim();               //只保留总页数的数字
+                System.out.println(d+"==========");
+                System.out.println(e+"hhhhhhhhhhhhhhh");
+                System.out.println(w+"mmmmmmmmmmmm");
+                String z = d.substring(0,1);
+                String q = e.substring(0,1);
+                Integer i = Integer.valueOf(z);
+                Integer j = Integer.valueOf(q);
+                Integer g = j - i;
+                Integer t = Integer.parseInt(w);
+                arr[0] = i;
+                arr[1] = t;
+                arr[2] = g;
+
+
+
+                ///String url = a.attr("href");
+                //html.add(url);
+
+            }
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        //return g;
+        return arr;
+    }
+
+    /**
+     * 爬取详细信息
+     * @param url
+     */
+    public void geInfo(String url,Long id,IZbjService zbjService) {
 
         Document doc = null;
         try {
             //获取html文件
             doc = Jsoup.connect(url).get();
-            //获取总页数
-            //int sumpages = Integer.parseInt(doc.select("div[class=pagination]").select("p[class=pagination-total]").text().replaceAll("\\D",""));
 
-            //for(int i = 1; i < sumpages; i++) {
             Elements listDiv = doc.getElementsByAttributeValue("class", "witkey-info");
 
-            //if(listDiv != null){
-            for (Element text : listDiv) {
+                for (Element text : listDiv) {
 
-                Elements a = text.getElementsByTag("a");                       //公司名称
-                Elements s0 = text.getElementsByClass("city-icon");           //所在地区
-                Elements s1 = text.getElementsByClass("score");               //综合评分
-                Elements s2 = text.getElementsByAttribute("title");                 //所属类型
-                Elements s3 = text.getElementsByClass("bz-border");           //信誉度
+                    Elements a = text.getElementsByTag("a");                       //公司名称
+                    Elements s0 = text.getElementsByClass("city-icon");           //所在地区
+                    Elements s1 = text.getElementsByClass("score");               //综合评分
+                    Elements s2 = text.getElementsByAttribute("title");                 //所属类型
+                    Elements s3 = text.getElementsByClass("bz-border");           //信誉度
 
-                Zbj zbj = new Zbj();
+                    Zbj zbj = new Zbj();
 
-                zbj.setFenlei(tiaojian1);
+                    zbj.setFenleiId(id);
 
-                zbj.setName(a.get(1).text());
+                    zbj.setName(a.get(1).text());
 
-                zbj.setAddr(s0.text());
+                    zbj.setAddr(s0.text());
 
-                String html = a.get(1).attr("href");
-                String ht = "https:";
-                String link = ht.concat(html);
-                zbj.setLink(link);
+                    String html = a.get(1).attr("href");
+                    String ht = "https:";
+                    String link = ht.concat(html);
+                    zbj.setLink(link);
 
-                zbj.setType(s2.get(0).html());
+                    zbj.setType(s2.get(0).html());
 
-                zbj.setCredit(s3.text());
+                    zbj.setCredit(s3.text());
 
-                zbj.setScore(s1.get(0).html());
+                    zbj.setScore(s1.get(0).html());
 
-                System.out.println(zbj);
-                zbjService.save(zbj);
+                    System.out.println(zbj + "=========================");
+                    zbjService.save(zbj);
 
-            }
+                }
 
-
-            //}
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

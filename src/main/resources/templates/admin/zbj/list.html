@@ -33,7 +33,7 @@
 
                     <div class="cl pd-5 bg-1 bk-gray ">
                         <div class="searchByField">
-                                         <input type="input-text" class="input-text" th:value="${searchInfo.fenlei}" name="fenlei" placeholder="搜索分类" sid="fenlei"/>
+                                         <input type="input-text" class="input-text" th:value="${searchInfo.fenleiId}" name="fenleiId" placeholder="搜索分类" sid="fenleiId"/>
                                          <input type="input-text" class="input-text" th:value="${searchInfo.name}" name="name" placeholder="搜索公司名称" sid="name"/>
                                          <input type="input-text" class="input-text" th:value="${searchInfo.addr}" name="addr" placeholder="搜索地区" sid="addr"/>
                                          <input type="input-text" class="input-text" th:value="${searchInfo.link}" name="link" placeholder="搜索链接" sid="link"/>
@@ -70,7 +70,7 @@
                             <td><input type="checkbox" value="1" th:value="${zbj.id}"
                                        name="id"/></td>
                             <td th:text="${count.count}"></td>
-                                    <td th:text="${zbj.fenlei}"></td>
+                                    <td th:text="${zbj.fenleiId}"></td>
                                     <td th:text="${zbj.name}"></td>
                                     <td th:text="${zbj.addr}"></td>
                                     <td th:text="${zbj.link}"></td>

@@ -11,7 +11,7 @@
  Target Server Version : 50643
  File Encoding         : 65001
 
- Date: 23/05/2019 11:21:55
+ Date: 24/05/2019 17:26:13
 */
 
 SET NAMES utf8mb4;
@@ -46,7 +46,7 @@ CREATE TABLE `sort`  (
 -- ----------------------------
 -- Records of sort
 -- ----------------------------
-INSERT INTO `sort` VALUES (9, '软件开发', '北京', '2019-05-23 02:15:56');
+INSERT INTO `sort` VALUES (9, '软件开发', '保定', '2019-05-23 15:08:55');
 
 -- ----------------------------
 -- Table structure for sys_organization
@@ -226,7 +226,7 @@ CREATE TABLE `title`  (
 DROP TABLE IF EXISTS `zbj`;
 CREATE TABLE `zbj`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `fenlei` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '分类',
+  `fenlei_id` bigint(20) NULL DEFAULT NULL COMMENT '分类',
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '公司名称',
   `addr` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '地区',
   `link` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '链接',
@@ -234,6 +234,6 @@ CREATE TABLE `zbj`  (
   `credit` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '信誉度',
   `score` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '综合评分',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5506 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 6466 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 SET FOREIGN_KEY_CHECKS = 1;

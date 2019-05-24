@@ -12,7 +12,7 @@
                     <label class="form-label col-xs-2 col-sm-2"><span
                                 class="c-red">*</span>分类：</label>
                             <div class="formControls col-xs-10 col-sm-10">
-                                <input type="input-text" class="input-text" th:value="${zbj.fenlei}" name="fenlei"  placeholder="修改分类" id="fenlei"/>
+                                <input type="input-text" class="input-text" th:value="${zbj.fenleiId}" name="fenleiId"  placeholder="修改分类" id="fenleiId"/>
                             </div>
                     </div>
                 </div>
@@ -81,7 +81,7 @@
     $(function () {
         $("#form-zbj-edit").validate({
             rules: {
-        fenlei:
+        fenleiId:
         {
             required: true,
         },

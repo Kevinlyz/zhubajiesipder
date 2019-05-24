@@ -111,7 +111,7 @@ public class ExportExcel {
 
                 HSSFCell cell2 = row.createCell(1, HSSFCell.CELL_TYPE_STRING);
                 cell2.setCellStyle(style);
-                cell2.setCellValue(dataList.get(i).getFenlei());
+                cell2.setCellValue(dataList.get(i).getFenleiId());
 
                 HSSFCell cell3 = row.createCell(2, HSSFCell.CELL_TYPE_STRING);
                 cell3.setCellStyle(style);

@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author 会写代码的怪叔叔
- * @since 2019-05-22
+ * @since 2019-05-23
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -23,7 +23,7 @@ public class Zbj extends BaseEntity {
     /**
      * 分类
      */
-    private String fenlei;
+    private Long fenleiId;
 
     /**
      * 公司名称
