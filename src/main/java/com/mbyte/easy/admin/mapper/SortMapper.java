@@ -1,8 +1,8 @@
 package com.mbyte.easy.admin.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.mbyte.easy.admin.entity.Sort;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * <p>
@@ -14,6 +14,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface SortMapper extends BaseMapper<Sort> {
 
-    IPage<Sort> daoxu(IPage<Sort> page,String fenlei,String addr,String creatdate);
+    IPage<Sort> daoxu(IPage<Sort> page, String fenlei, Long addr, String creatdate);
 
 }

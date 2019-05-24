@@ -1,16 +1,13 @@
 package com.mbyte.easy.admin.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mbyte.easy.admin.entity.Sort;
 import com.mbyte.easy.admin.mapper.SortMapper;
 import com.mbyte.easy.admin.service.ISortService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * <p>
@@ -27,7 +24,7 @@ public class SortServiceImpl extends ServiceImpl<SortMapper, Sort> implements IS
     private SortMapper sortMapper;
 
     @Override
-    public IPage<Sort> daoxu(IPage<Sort> page,String fenlei,String addr,String creatdate) {
+    public IPage<Sort> daoxu(IPage<Sort> page, String fenlei, Long addr, String creatdate) {
         return sortMapper.daoxu(page,fenlei,addr,creatdate);
     }
 }

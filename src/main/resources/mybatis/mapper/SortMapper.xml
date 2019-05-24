@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.mbyte.easy.admin.entity.Sort">
       <id column="id" jdbcType="BIGINT" property="id" />
       <id column="fenlei" jdbcType="VARCHAR" property="fenlei" />
-      <id column="addr" jdbcType="VARCHAR" property="addr" />
+      <id column="addr" jdbcType="BIGINT" property="addr" />
       <id column="creatdate" jdbcType="TIMESTAMP" property="creatdate" />
 
   </resultMap>
@@ -52,7 +52,7 @@
     insert into sort (fenlei, addr, creatdate)
     values (
          fenlei = #{fenlei,jdbcType=VARCHAR},
-         addr = #{addr,jdbcType=VARCHAR},
+         addr = #{addr,jdbcType=BIGINT},
          creatdate = #{creatdate,jdbcType=datetime}
     )
   </insert>
@@ -77,7 +77,7 @@
       </if>
 
       <if test="addr != null">
-        addr = #{addr,jdbcType=VARCHAR},
+        addr = #{addr,jdbcType=BIGINT},
       </if>
 
       <if test="creatdate != null">
@@ -93,7 +93,7 @@
          fenlei = #{fenlei,jdbcType=VARCHAR},
       </if>
        <if test="addr != null">
-         addr = #{addr,jdbcType=VARCHAR},
+         addr = #{addr,jdbcType=BIGINT},
       </if>
        <if test="creatdate != null">
          creatdate = #{creatdate,jdbcType=datetime},
@@ -105,7 +105,7 @@
     update sort
     set
         fenlei = #{fenlei,jdbcType=VARCHAR},
-        addr = #{addr,jdbcType=VARCHAR},
+        addr = #{addr,jdbcType=BIGINT},
         creatdate = #{creatdate,jdbcType=datetime},
 
        where id = #{id,jdbcType=BIGINT}

@@ -1,8 +1,8 @@
 package com.mbyte.easy.admin.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.mbyte.easy.admin.entity.Sort;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.mbyte.easy.admin.entity.Sort;
 
 /**
  * <p>
@@ -14,6 +14,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ISortService extends IService<Sort> {
 
-    IPage<Sort> daoxu(IPage<Sort> page,String fenlei,String addr,String creatdate);
+    IPage<Sort> daoxu(IPage<Sort> page, String fenlei, Long addr, String creatdate);
 
 }

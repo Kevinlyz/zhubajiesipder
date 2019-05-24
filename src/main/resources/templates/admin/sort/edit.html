@@ -18,7 +18,7 @@
                 </div>
                 <div class="row cl">
                     <label class="form-label col-xs-2 col-sm-2"><span
-                                class="c-red"></span>所属地区：</label>
+                                class="c-red">*</span>所属地区：</label>
                             <div class="formControls col-xs-10 col-sm-10">
                                 <input type="input-text" class="input-text" th:value="${sort.addr}" name="addr"  placeholder="修改所属地区" id="addr"/>
                             </div>
@@ -53,10 +53,10 @@
         {
             required: true,
         },
-        // addr:
-        // {
-        //     required: true,
-        // },
+        addr:
+        {
+            required: true,
+        },
         // creatdate:
         // {
         //     required: true,

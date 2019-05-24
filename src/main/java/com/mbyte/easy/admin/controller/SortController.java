@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
 * <p>
@@ -32,7 +32,7 @@ import java.time.LocalDateTime;
 */
 @Controller
 @RequestMapping("/admin/sort")
-public class SortController extends BaseController  {
+public class SortController extends BaseController {
 
     private String prefix = "admin/sort/";
 
@@ -55,7 +55,7 @@ public class SortController extends BaseController  {
     * @return
     */
     @RequestMapping
-    public String daoxu(Model model,@RequestParam(value = "pageNo", required = false, defaultValue = "1") Integer pageNo,@RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize, String creatdateSpace, Sort sort,String fenlei,String addr,String creatdate) {
+    public String daoxu(Model model, @RequestParam(value = "pageNo", required = false, defaultValue = "1") Integer pageNo, @RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize, String creatdateSpace, Sort sort, String fenlei, Long addr, String creatdate) {
         Page<Sort> page = new Page<Sort>(pageNo, pageSize);
 
         IPage<Sort> pageInfo = sortService.daoxu(page,fenlei,addr,creatdate);
@@ -118,9 +118,6 @@ public class SortController extends BaseController  {
         QueryWrapper<Zbj> queryWrapper = new QueryWrapper<Zbj>();
         queryWrapper = queryWrapper.eq("fenlei_id",id);
         zbjService.remove(queryWrapper);
-//        QueryWrapper<Sort> queryWrapper1 = new QueryWrapper<Sort>();
-//        queryWrapper1 = queryWrapper1.eq("id",id);
-//        sortService.remove(queryWrapper1);
         return toAjax(sortService.removeById(id));
     }
     /**
@@ -146,20 +143,20 @@ public class SortController extends BaseController  {
     @ResponseBody
     public String export(HttpServletRequest request,Long id) {
 
-
-        System.out.println(id);
         QueryWrapper<Sort> queryWrapper = new QueryWrapper<Sort>();
         queryWrapper = queryWrapper.eq("id",id);
         Sort biao = sortService.getOne(queryWrapper);
 
         String tiaojian1 = biao.getFenlei();
-        System.out.println(tiaojian1);
+
+        Long area = biao.getAddr();
+        System.out.println(area);
 
         //将分类进行转码
         String nameUrl = ReptileUtil.urlEncodeURL(tiaojian1);
         System.out.println(nameUrl+ "============================");
 
-        String urlOne = "https://baoding.zbj.com/search/p/?type=new&kw=" + nameUrl + "&d=3571";
+        String urlOne = "https://baoding.zbj.com/search/p/?type=new&kw=" + nameUrl + "&d=" + area;
         QueryWrapper <Zbj> queryWrapper1 = new QueryWrapper<Zbj>();
         queryWrapper1 = queryWrapper1.eq("fenlei_id",id);
         zbjService.remove(queryWrapper1);
@@ -167,16 +164,15 @@ public class SortController extends BaseController  {
         ReptileUtil tit = new ReptileUtil();
         tit.geInfo(urlOne,id,zbjService);
 
-        Integer a = tit.sePageUrl(urlOne)[1];
+        Integer a = tit.sePageUrl(urlOne)[1];               //总页数
 
-        Integer j = tit.sePageUrl(urlOne)[0];
-        Integer k = tit.sePageUrl(urlOne)[2];
-        System.out.println(a);
+        Integer j = tit.sePageUrl(urlOne)[0];               //第二页k值
+        Integer k = tit.sePageUrl(urlOne)[2];               //第三页k值
 
         for(int i = 0;i < a;i++){
 
             Integer h = j+(k*i);
-            String urlTwo = "http://baoding.zbj.com/search/p/k" + h + ".html?type=new&kw=" + nameUrl + "&d=3571";
+            String urlTwo = "http://baoding.zbj.com/search/p/k" + h + ".html?type=new&kw=" + nameUrl + "&d="+ area;
             ReptileUtil titTwo = new ReptileUtil();
             titTwo.geInfo(urlTwo,id,zbjService);
         }

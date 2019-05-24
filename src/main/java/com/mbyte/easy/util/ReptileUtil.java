@@ -2,19 +2,14 @@ package com.mbyte.easy.util;
 
 import com.mbyte.easy.admin.entity.Zbj;
 import com.mbyte.easy.admin.service.IZbjService;
-import org.apache.commons.lang3.ObjectUtils;
-import org.jsoup.*;
-import org.jsoup.nodes.*;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -88,23 +83,18 @@ public class ReptileUtil {
                 String d = m.replaceAll("").trim();               //只保留第二页的数字
                 String e = n.replaceAll("").trim();               //只保留第三页的数字
                 String w = h.replaceAll("").trim();               //只保留总页数的数字
-                System.out.println(d+"==========");
-                System.out.println(e+"hhhhhhhhhhhhhhh");
-                System.out.println(w+"mmmmmmmmmmmm");
-                String z = d.substring(0,1);
-                String q = e.substring(0,1);
+
+                String z = d.substring(0,2);
+                String q = e.substring(0,2);
                 Integer i = Integer.valueOf(z);
                 Integer j = Integer.valueOf(q);
                 Integer g = j - i;
-                Integer t = Integer.parseInt(w);
+
+                Integer t = Integer.valueOf(w);
                 arr[0] = i;
                 arr[1] = t;
                 arr[2] = g;
 
-
-
-                ///String url = a.attr("href");
-                //html.add(url);
 
             }
         } catch (IOException e) {
@@ -119,7 +109,7 @@ public class ReptileUtil {
      * 爬取详细信息
      * @param url
      */
-    public void geInfo(String url,Long id,IZbjService zbjService) {
+    public void geInfo(String url, Long id, IZbjService zbjService) {
 
         Document doc = null;
         try {
@@ -155,7 +145,6 @@ public class ReptileUtil {
 
                     zbj.setScore(s1.get(0).html());
 
-                    System.out.println(zbj + "=========================");
                     zbjService.save(zbj);
 
                 }

@@ -1,10 +1,11 @@
 package com.mbyte.easy.admin.entity;
 
 import com.mbyte.easy.common.entity.BaseEntity;
-import java.time.LocalDateTime;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -29,7 +30,7 @@ public class Sort extends BaseEntity {
     /**
      * 所属地区
      */
-    private String addr;
+    private Long addr;
 
     /**
      * 创建时间
