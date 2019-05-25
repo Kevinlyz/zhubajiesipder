@@ -20,7 +20,7 @@
                     <label class="form-label col-xs-2 col-sm-2"><span
                                 class="c-red">*</span>所属地区：</label>
                             <div class="formControls col-xs-10 col-sm-10">
-                                <input type="input-text" class="input-text" th:value="${sort.addr}" name="addr"  placeholder="修改所属地区" id="addr"/>
+                                <input type="input-text" class="input-text" th:value="${sort.addr}" name="addr"  placeholder="修改所属地区" id="addr" onchange="checkRate()"/>
                             </div>
                     </div>
                 </div>
@@ -103,6 +103,22 @@
             ,type: 'datetime'
         });
     });
+
+    //判断地区编码是否正确
+    function checkRate(){
+        var a =  $('#addr').val();
+        var re = /^[0-9]+.?[0-9]*$/;
+        if(a.toString().length<4||a.toString().length>4){
+            alert("请输入正确的4位地区编码");
+        }
+        else {
+            if(!re.test(a)){
+                alert("请输入正确的4位地区编码");
+                // document.getElementById(input).value = "";
+                return false;
+            }
+        }
+    }
 
 </script>
 <!--/请在上方写此页面业务相关的脚本-->
