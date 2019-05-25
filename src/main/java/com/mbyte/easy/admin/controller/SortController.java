@@ -170,14 +170,14 @@ public class SortController extends BaseController {
         Integer k = tit.sePageUrl(urlOne)[2];               //第三页k值
 
         for (int i = 0; i < a; i++) {
-
             if(i == 6) {
+                break;
+            } else {
                 Integer h = j + (k * i);
                 String urlTwo = "http://baoding.zbj.com/search/p/k" + h + ".html?type=new&kw=" + nameUrl + "&d=" + area;
                 ReptileUtil titTwo = new ReptileUtil();
                 titTwo.geInfo(urlTwo, id, zbjService);
             }
-            break;
         }
 
         //导出excel
