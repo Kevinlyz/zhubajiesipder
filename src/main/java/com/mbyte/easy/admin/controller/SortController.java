@@ -150,11 +150,9 @@ public class SortController extends BaseController {
         String tiaojian1 = biao.getFenlei();
 
         Long area = biao.getAddr();
-        System.out.println(area);
 
         //将分类进行转码
         String nameUrl = ReptileUtil.urlEncodeURL(tiaojian1);
-        System.out.println(nameUrl+ "============================");
 
         String urlOne = "https://baoding.zbj.com/search/p/?type=new&kw=" + nameUrl + "&d=" + area;
         QueryWrapper <Zbj> queryWrapper1 = new QueryWrapper<Zbj>();
@@ -166,37 +164,59 @@ public class SortController extends BaseController {
 
         Integer a = tit.sePageUrl(urlOne)[1];               //总页数
 
-        Integer j = tit.sePageUrl(urlOne)[0];               //第二页k值
-        Integer k = tit.sePageUrl(urlOne)[2];               //第三页k值
+        if(a == 1) {
 
-        for (int i = 0; i < a; i++) {
-            if(i == 6) {
-                break;
-            } else {
+            //导出excel
+            String tableid = request.getParameter("id");
+            QueryWrapper<Zbj> queryWrapper2 = new QueryWrapper<Zbj>();
+            queryWrapper2 = queryWrapper2.eq("fenlei_id", tableid);
+
+            String sk = "猪八戒信息表";
+            String[] rowsName = new String[]{"序号", "标题", "公司名称", "地址", "链接", "类型", "信誉度", "综合评分"};
+            String filename1 = "猪八戒信息表";
+            ExportExcel ex = new ExportExcel(sk, rowsName);
+            try {
+                response.setContentType("application/vnd.ms-excel;charset=utf-8");
+                response.setHeader("Content-Disposition", "attachment;filename=" + new String((sk + ".xls").getBytes(), "iso-8859-1"));
+                List<Zbj> infoList = zbjService.list(queryWrapper2);
+                ex.exportPersonInfo(filename1, infoList);
+                ex.saveExcel(response);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else{
+            Integer j = tit.sePageUrl(urlOne)[0];               //第二页k值
+            Integer k = tit.sePageUrl(urlOne)[2];               //第三页k值
+            System.out.println(a + "bbbbbbbbbbbb");
+
+            for (int i = 0; i < a; i++) {
+//                if(i == 6) {
+//                break;
+//            } else {
                 Integer h = j + (k * i);
                 String urlTwo = "http://baoding.zbj.com/search/p/k" + h + ".html?type=new&kw=" + nameUrl + "&d=" + area;
                 ReptileUtil titTwo = new ReptileUtil();
                 titTwo.geInfo(urlTwo, id, zbjService);
+                // }
             }
-        }
+            //导出excel
+            String tableid = request.getParameter("id");
+            QueryWrapper<Zbj> queryWrapper2 = new QueryWrapper<Zbj>();
+            queryWrapper2 = queryWrapper2.eq("fenlei_id", tableid);
 
-        //导出excel
-        String tableid = request.getParameter("id");
-        QueryWrapper<Zbj> queryWrapper2 = new QueryWrapper<Zbj>();
-        queryWrapper2 = queryWrapper2.eq("fenlei_id",tableid);
-
-        String sk = "猪八戒信息表";
-        String[] rowsName = new String[]{"序号","标题","公司名称","地址","链接","类型","信誉度","综合评分"};
-        String filename1 = "猪八戒信息表";
-        ExportExcel ex = new ExportExcel(sk,rowsName);
-        try {
-            response.setContentType("application/vnd.ms-excel;charset=utf-8");
-            response.setHeader("Content-Disposition","attachment;filename=" + new String((sk + ".xls").getBytes(),"iso-8859-1"));
-            List<Zbj> infoList = zbjService.list(queryWrapper2);
-            ex.exportPersonInfo(filename1,infoList);
-            ex.saveExcel(response);
-        } catch (Exception e) {
-            e.printStackTrace();
+            String sk = "猪八戒信息表";
+            String[] rowsName = new String[]{"序号", "标题", "公司名称", "地址", "链接", "类型", "信誉度", "综合评分"};
+            String filename1 = "猪八戒信息表";
+            ExportExcel ex = new ExportExcel(sk, rowsName);
+            try {
+                response.setContentType("application/vnd.ms-excel;charset=utf-8");
+                response.setHeader("Content-Disposition", "attachment;filename=" + new String((sk + ".xls").getBytes(), "iso-8859-1"));
+                List<Zbj> infoList = zbjService.list(queryWrapper2);
+                ex.exportPersonInfo(filename1, infoList);
+                ex.saveExcel(response);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         return null;

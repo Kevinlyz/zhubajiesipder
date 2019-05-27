@@ -70,8 +70,6 @@ public class ReptileUtil {
                 //String y = a.attr("href");
                 String b = a.get(2).attr("href");                 //获取第二页的url
                 String c = a.get(3).attr("href");                 //获取第三页的url
-                System.out.println(b);
-                System.out.println(c);
 
                 String f = p.text();                                           //获取总页数
                 String regEx = "[^0-9]";
@@ -84,17 +82,19 @@ public class ReptileUtil {
                 String e = n.replaceAll("").trim();               //只保留第三页的数字
                 String w = h.replaceAll("").trim();               //只保留总页数的数字
 
-                String z = d.substring(0,2);
-                String q = e.substring(0,2);
-                Integer i = Integer.valueOf(z);
-                Integer j = Integer.valueOf(q);
-                Integer g = j - i;
-
                 Integer t = Integer.valueOf(w);
-                arr[0] = i;
                 arr[1] = t;
-                arr[2] = g;
 
+                if(t > 1) {
+
+                    String z = d.substring(0, 2);
+                    String q = e.substring(0, 2);
+                    Integer i = Integer.valueOf(z);
+                    Integer j = Integer.valueOf(q);
+                    Integer g = j - i;
+                    arr[0] = i;
+                    arr[2] = g;
+                }
 
             }
         } catch (IOException e) {
