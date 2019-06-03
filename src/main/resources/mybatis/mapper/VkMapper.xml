@@ -1,28 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mbyte.easy.admin.mapper.ZbjMapper">
-  <resultMap id="BaseResultMap" type="com.mbyte.easy.admin.entity.Zbj">
+<mapper namespace="com.mbyte.easy.admin.mapper.VkMapper">
+  <resultMap id="BaseResultMap" type="com.mbyte.easy.admin.entity.Vk">
       <id column="id" jdbcType="BIGINT" property="id" />
-      <id column="fenlei_id" jdbcType="BIGINT" property="fenleiId" />
-      <id column="name" jdbcType="VARCHAR" property="name" />
-      <id column="addr" jdbcType="VARCHAR" property="addr" />
-      <id column="link" jdbcType="VARCHAR" property="link" />
-      <id column="type" jdbcType="VARCHAR" property="type" />
-      <id column="credit" jdbcType="INTEGER" property="credit" />
+      <id column="sort_id" jdbcType="BIGINT" property="sortId" />
+      <id column="num" jdbcType="INTEGER" property="num" />
       <id column="score" jdbcType="VARCHAR" property="score" />
+      <id column="company" jdbcType="VARCHAR" property="company" />
+      <id column="link" jdbcType="VARCHAR" property="link" />
+      <id column="province" jdbcType="VARCHAR" property="province" />
+      <id column="title" jdbcType="VARCHAR" property="title" />
+      <id column="price" jdbcType="VARCHAR" property="price" />
+      <id column="type" jdbcType="VARCHAR" property="type" />
 
   </resultMap>
   <sql id="Base_Column_List">
               id,
-      fenlei_id, name, addr, link, type, credit, score
+      sort_id, num, score, company, link,province,title,price,type
   </sql>
 
     <select id="selectAll" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from zbj
-        where fenlei_id = #{fenleiId,jdbcType=BIGINT}
-        order by credit desc
+        from vk
+        where sort_id = #{sortId,jdbcType=BIGINT}
+        order by num desc
     </select>
 
 <!--注意:在打开下面注释的时候，在执行添加和更新操作时，一定要添加事物，否则会造成无法添加和更新-->

@@ -139,7 +139,7 @@ public class SortController extends BaseController {
      * 抓取信息及导出excel
      * @return
      */
-    @GetMapping("export")
+    @RequestMapping("export")
     @ResponseBody
     public String export(HttpServletRequest request,Long id) {
 
@@ -171,14 +171,15 @@ public class SortController extends BaseController {
             QueryWrapper<Zbj> queryWrapper2 = new QueryWrapper<Zbj>();
             queryWrapper2 = queryWrapper2.eq("fenlei_id", tableid);
 
-            String sk = "猪八戒信息表";
+            String sk = "猪八戒"+tiaojian1+area+"信息表";
             String[] rowsName = new String[]{"序号", "标题", "公司名称", "地址", "链接", "类型", "信誉度", "综合评分"};
-            String filename1 = "猪八戒信息表";
+            String filename1 = "猪八戒"+tiaojian1+area+"信息表";
             ExportExcel ex = new ExportExcel(sk, rowsName);
             try {
                 response.setContentType("application/vnd.ms-excel;charset=utf-8");
                 response.setHeader("Content-Disposition", "attachment;filename=" + new String((sk + ".xls").getBytes(), "iso-8859-1"));
-                List<Zbj> infoList = zbjService.list(queryWrapper2);
+               // List<Zbj> infoList = zbjService.list(queryWrapper2);
+                List<Zbj> infoList = zbjService.selectAll(Long.valueOf(tableid));
                 ex.exportPersonInfo(filename1, infoList);
                 ex.saveExcel(response);
             } catch (Exception e) {
@@ -204,14 +205,15 @@ public class SortController extends BaseController {
             QueryWrapper<Zbj> queryWrapper2 = new QueryWrapper<Zbj>();
             queryWrapper2 = queryWrapper2.eq("fenlei_id", tableid);
 
-            String sk = "猪八戒信息表";
+            String sk = "猪八戒"+tiaojian1+area+"信息表";
             String[] rowsName = new String[]{"序号", "标题", "公司名称", "地址", "链接", "类型", "信誉度", "综合评分"};
-            String filename1 = "猪八戒信息表";
+            String filename1 = "猪八戒"+tiaojian1+area+"信息表";
             ExportExcel ex = new ExportExcel(sk, rowsName);
             try {
                 response.setContentType("application/vnd.ms-excel;charset=utf-8");
                 response.setHeader("Content-Disposition", "attachment;filename=" + new String((sk + ".xls").getBytes(), "iso-8859-1"));
-                List<Zbj> infoList = zbjService.list(queryWrapper2);
+               // List<Zbj> infoList = zbjService.list(queryWrapper2);
+                List<Zbj> infoList = zbjService.selectAll(Long.valueOf(tableid));
                 ex.exportPersonInfo(filename1, infoList);
                 ex.saveExcel(response);
             } catch (Exception e) {

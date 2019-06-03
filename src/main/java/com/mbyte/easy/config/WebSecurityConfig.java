@@ -78,7 +78,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/h-ui.admin/**")
                 .antMatchers("/lib/**")
                 .antMatchers("/upload/**")
-                .antMatchers("/js/**");
+                .antMatchers("/js/**")
+		        .antMatchers("/progressBar/**");
 	}
 
 	@Override

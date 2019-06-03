@@ -1,8 +1,7 @@
 package com.mbyte.easy.admin.mapper;
 
-import com.mbyte.easy.admin.entity.Vk;
-import com.mbyte.easy.admin.entity.Zbj;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.mbyte.easy.admin.entity.Vk;
 
 import java.util.List;
 
@@ -14,7 +13,7 @@ import java.util.List;
  * @author 会写代码的怪叔叔
  * @since 2019-05-23
  */
-public interface ZbjMapper extends BaseMapper<Zbj> {
+public interface VkMapper extends BaseMapper<Vk> {
 
-    List<Zbj> selectAll(Long fenleiId);
+    List<Vk> selectAll(Long sortId);
 }

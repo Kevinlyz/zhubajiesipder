@@ -5,55 +5,37 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.time.LocalDateTime;
+
 /**
  * <p>
  * 
  * </p>
  *
  * @author 会写代码的怪叔叔
- * @since 2019-05-23
+ * @since 2019-05-22
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public class Zbj extends BaseEntity {
+public class Vksort extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
     /**
      * 分类
      */
-    private Long fenleiId;
+    private String sort;
 
     /**
-     * 公司名称
+     * 所属地区
      */
-    private String name;
+    private String province;
 
     /**
-     * 地区
+     * 创建时间
      */
-    private String addr;
-
-    /**
-     * 链接
-     */
-    private String link;
-
-    /**
-     * 类型
-     */
-    private String type;
-
-    /**
-     * 信誉度
-     */
-    private Integer credit;
-
-    /**
-     * 综合评分
-     */
-    private String score;
+    private LocalDateTime creatdate;
 
 
 }

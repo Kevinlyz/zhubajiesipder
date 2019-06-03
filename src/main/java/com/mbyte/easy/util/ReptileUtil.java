@@ -141,7 +141,12 @@ public class ReptileUtil {
 
                     zbj.setType(s2.get(0).html());
 
-                    zbj.setCredit(s3.text());
+                    if(s3.text().equals("")){
+                        zbj.setCredit(0);
+                    }else{
+                        zbj.setCredit(Integer.parseInt(s3.text()));
+                    }
+
 
                     zbj.setScore(s1.get(0).html());
 

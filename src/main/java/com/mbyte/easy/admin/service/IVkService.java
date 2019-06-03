@@ -1,7 +1,7 @@
 package com.mbyte.easy.admin.service;
 
-import com.mbyte.easy.admin.entity.Zbj;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.mbyte.easy.admin.entity.Vk;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import java.util.List;
  * @author 会写代码的怪叔叔
  * @since 2019-05-23
  */
-public interface IZbjService extends IService<Zbj> {
+public interface IVkService extends IService<Vk> {
 
-    List<Zbj> selectAll(Long fenleiId);
+    List<Vk> selectAll(Long sortId);
 }

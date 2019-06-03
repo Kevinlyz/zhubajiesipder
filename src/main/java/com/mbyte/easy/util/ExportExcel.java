@@ -5,6 +5,8 @@ import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.mbyte.easy.admin.entity.Vk;
 import com.mbyte.easy.admin.entity.Zbj;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -61,7 +63,7 @@ public class ExportExcel {
             sheet.setColumnWidth(1, 4000);
             sheet.setColumnWidth(2, 8000);
             sheet.setColumnWidth(3, 4000);
-            sheet.setColumnWidth(4, 12000);
+            sheet.setColumnWidth(4, 8000);
             sheet.setColumnWidth(5, 4000);
             sheet.setColumnWidth(6, 4000);
 
@@ -136,6 +138,106 @@ public class ExportExcel {
                 HSSFCell cell8 = row.createCell(7, HSSFCell.CELL_TYPE_STRING);
                 cell8.setCellStyle(numberStyle);
                 cell8.setCellValue(dataList.get(i).getScore());
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    /**
+     * 导出一品威客指定信息列表
+     * @param
+     * @throws Exception
+     */
+    public void exportPersonInfo1(String sheetTitle,List<Vk> countList) throws Exception {
+        try {
+            HSSFSheet sheet = workbook.createSheet(sheetTitle);// 创建工作表
+            sheet.setColumnWidth(1, 4000);
+            sheet.setColumnWidth(2, 8000);
+            sheet.setColumnWidth(3, 4000);
+            sheet.setColumnWidth(4, 4000);
+            sheet.setColumnWidth(5, 12000);
+            sheet.setColumnWidth(6, 4000);
+
+            HSSFCellStyle style = this.getStyle(workbook);
+            HSSFCellStyle numberStyle = this.getNumberStype(workbook);
+
+            HSSFCellStyle headStyle = this.getColumnTopStyle(workbook);
+
+            int columnNum = rowName.length;
+
+            List<Vk> dataList = countList;
+
+            HSSFRow rowRowName = sheet.createRow(2);                // 在索引2的位置创建行(最顶端的行开始的第二行)
+            HSSFRow rowRowName2 = sheet.createRow(3);                // 在索引2的位置创建行(最顶端的行开始的第二行)
+
+            // 将列头设置到sheet的单元格中
+            for (int n = 0; n < columnNum; n++) {
+                HSSFCell cellRowName = rowRowName.createCell(n);                //创建列头对应个数的单元格
+                cellRowName.setCellType(HSSFCell.CELL_TYPE_STRING);
+                cellRowName.setCellStyle(headStyle);
+
+                HSSFCell cellRowName2 = rowRowName2.createCell(n);                //创建列头对应个数的单元格
+                cellRowName2.setCellType(HSSFCell.CELL_TYPE_STRING);
+                cellRowName2.setCellStyle(headStyle);
+                sheet.addMergedRegion(new CellRangeAddress(2, 3, n, n));
+
+                //设置列头单元格的数据类型
+                HSSFRichTextString text = new HSSFRichTextString(rowName[n]);
+                cellRowName.setCellValue(text);                                    //设置列头单元格的值
+                // HSSFCell cell = row.createCell((short) cellIndex);
+                //创建表头
+                HSSFRow row=sheet.createRow(1);
+                //合并列
+                HSSFCell cell=row.createCell(0);
+                cell.setCellValue(sheetTitle);
+                CellRangeAddress region=new CellRangeAddress(1, 1, 0, 7);
+                sheet.addMergedRegion(region);
+                cell.setCellType(HSSFCell.CELL_TYPE_STRING);
+                cell.setCellStyle(headStyle);
+            }
+            //将查询出的数据设置到sheet对应的单元格中
+            for (int i = 0; i < dataList.size(); i++) {
+                HSSFRow row = sheet.createRow(i + 6);//创建所需的行数
+                HSSFCell cell1 = row.createCell(0, HSSFCell.CELL_TYPE_STRING);
+                cell1.setCellStyle(style);
+                cell1.setCellValue(i + 1);
+
+                HSSFCell cell2 = row.createCell(1, HSSFCell.CELL_TYPE_STRING);
+                cell2.setCellStyle(style);
+                cell2.setCellValue(dataList.get(i).getTitle());
+
+                HSSFCell cell3 = row.createCell(2, HSSFCell.CELL_TYPE_STRING);
+                cell3.setCellStyle(style);
+                cell3.setCellValue(dataList.get(i).getPrice());
+
+                HSSFCell cell4 = row.createCell(3, HSSFCell.CELL_TYPE_STRING);
+                cell4.setCellStyle(numberStyle);
+                cell4.setCellValue(dataList.get(i).getCompany());
+
+                HSSFCell cell5 = row.createCell(4, HSSFCell.CELL_TYPE_STRING);
+                cell5.setCellStyle(numberStyle);
+                cell5.setCellValue(dataList.get(i).getProvince());
+
+                HSSFCell cell6 = row.createCell(5, HSSFCell.CELL_TYPE_STRING);
+                cell6.setCellStyle(numberStyle);
+                cell6.setCellValue(dataList.get(i).getLink());
+
+                HSSFCell cell7 = row.createCell(6, HSSFCell.CELL_TYPE_STRING);
+                cell7.setCellStyle(numberStyle);
+                cell7.setCellValue(dataList.get(i).getType());
+
+                HSSFCell cell8 = row.createCell(7, HSSFCell.CELL_TYPE_STRING);
+                cell8.setCellStyle(numberStyle);
+                cell8.setCellValue(dataList.get(i).getNum());
+
+                HSSFCell cell9 = row.createCell(8, HSSFCell.CELL_TYPE_STRING);
+                cell9.setCellStyle(numberStyle);
+                cell9.setCellValue(dataList.get(i).getScore());
 
             }
 
