@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mbyte.easy.admin.mapper.TCompanyMapper">
+  <resultMap id="BaseResultMap" type="com.mbyte.easy.admin.entity.TCompany">
+      <id column="id" jdbcType="BIGINT" property="id" />
+      <id column="company_name" jdbcType="VARCHAR" property="companyName" />
+      <id column="company_url" jdbcType="VARCHAR" property="companyUrl" />
+      <id column="company_states" jdbcType="INTEGER" property="companyStates" />
+      <id column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <id column="my_marks" jdbcType="VARCHAR" property="myMarks" />
+
+  </resultMap>
+  <sql id="Base_Column_List">
+              id,
+      company_name, company_url, company_states, create_time, my_marks
+  </sql>
+
+
+
+
+ <select id="selectAll"  resultMap="BaseResultMap">
+    select
+    *
+    from t_company
+
+     order by id desc
+  </select>
+
+    <select id="selectByStates" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * FROM t_company WHERE company_states = #{companyStates,jdbcType=INTEGER} ORDER BY id desc
+  </select>
+    <select id="selectByUrl" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * FROM t_company WHERE company_url = #{companyUrl,jdbcType=VARCHAR}
+  </select>
+<!--  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">-->
+<!--    delete from  t_company-->
+<!--       where id = #{id,jdbcType=BIGINT}-->
+
+<!--  </delete>-->
+
+
+<!--  <insert id="insertSelective" parameterType="com.mbyte.easy.admin.entity.TCompany">-->
+<!--    insert into t_company-->
+<!--    <trim prefix="(" suffix=")" suffixOverrides=",">-->
+<!--      <if test="companyName != null">-->
+<!--        company_name,-->
+<!--      </if>-->
+<!--      <if test="companyUrl != null">-->
+<!--        company_url,-->
+<!--      </if>-->
+<!--      <if test="companyStates != null">-->
+<!--        company_states,-->
+<!--      </if>-->
+<!--      <if test="createTime != null">-->
+<!--        create_time,-->
+<!--      </if>-->
+<!--      <if test="myMarks != null">-->
+<!--        my_marks,-->
+<!--      </if>-->
+<!--    </trim>-->
+<!--    <trim prefix="values (" suffix=")" suffixOverrides=",">-->
+
+<!--      <if test="companyName != null">-->
+<!--        company_name = #{companyName,jdbcType=VARCHAR},-->
+<!--      </if>-->
+
+<!--      <if test="companyUrl != null">-->
+<!--        company_url = #{companyUrl,jdbcType=VARCHAR},-->
+<!--      </if>-->
+
+<!--      <if test="companyStates != null">-->
+<!--        company_states = #{companyStates,jdbcType=INT},-->
+<!--      </if>-->
+
+<!--      <if test="createTime != null">-->
+<!--        create_time = #{createTime,jdbcType=datetime},-->
+<!--      </if>-->
+
+<!--      <if test="myMarks != null">-->
+<!--        my_marks = #{myMarks,jdbcType=VARCHAR},-->
+<!--      </if>-->
+
+<!--    </trim>-->
+<!--  </insert>-->
+<!--  <update id="updateByPrimaryKeySelective" parameterType="com.mbyte.easy.admin.entity.TCompany">-->
+<!--    update t_company-->
+<!--    <set>-->
+<!--       <if test="companyName != null">-->
+<!--         company_name = #{companyName,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--       <if test="companyUrl != null">-->
+<!--         company_url = #{companyUrl,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--       <if test="companyStates != null">-->
+<!--         company_states = #{companyStates,jdbcType=INT},-->
+<!--      </if>-->
+<!--       <if test="createTime != null">-->
+<!--         create_time = #{createTime,jdbcType=datetime},-->
+<!--      </if>-->
+<!--       <if test="myMarks != null">-->
+<!--         my_marks = #{myMarks,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--    </set>-->
+<!--       where id = #{id,jdbcType=BIGINT}-->
+<!--  </update>-->
+<!--  <update id="updateByPrimaryKey" parameterType="com.mbyte.easy.admin.entity.TCompany">-->
+<!--    update t_company-->
+<!--    set-->
+<!--        company_name = #{companyName,jdbcType=VARCHAR},-->
+<!--        company_url = #{companyUrl,jdbcType=VARCHAR},-->
+<!--        company_states = #{companyStates,jdbcType=INT},-->
+<!--        create_time = #{createTime,jdbcType=datetime},-->
+<!--        my_marks = #{myMarks,jdbcType=VARCHAR},-->
+
+<!--       where id = #{id,jdbcType=BIGINT}-->
+<!--  </update>-->
+    <!--    <insert id="insert" parameterType="com.mbyte.easy.admin.entity.TCompany">-->
+    <!--    insert into t_company (company_name, company_url, company_states, create_time, my_marks)-->
+    <!--    values (-->
+    <!--         company_name = #{companyName,jdbcType=VARCHAR},-->
+    <!--         company_url = #{companyUrl,jdbcType=VARCHAR},-->
+    <!--         company_states = #{companyStates,jdbcType=INTEGER},-->
+    <!--         create_time = #{createTime,jdbcType=TIMESTAMP},-->
+    <!--         my_marks = #{myMarks,jdbcType=VARCHAR}-->
+    <!--    )-->
+    <!--  </insert>-->
+</mapper>
