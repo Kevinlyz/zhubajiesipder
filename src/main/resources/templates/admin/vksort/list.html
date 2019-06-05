@@ -127,10 +127,7 @@
 
         click = 1;
 
-        var bar = document.getElementById("wrapper");
 
-        bar.style.display = (bar.style.display.match("block")) ? "none" : "block";
-        setInterval(increment,100);
 
 
         var _list = new Array();
@@ -146,6 +143,14 @@
             layer.msg("只能导出一条信息");
             return false;
         }
+
+        if(_list.length == 1){
+            var bar = document.getElementById("wrapper");
+
+            bar.style.display = (bar.style.display.match("block")) ? "none" : "block";
+            setInterval(increment,100);
+        }
+
         url = url + _list[0];
         //window.open(url);
        //  var w = "/admin/vksort/export?id="+ _list[0];
@@ -154,8 +159,6 @@
             type: 'POST',
             url: url,
             success:function(){
-                alert("111");
-
                 window.location.href=url;
                // window.open("/fileSuffix/"+www+".xls","","");
                 flag = 1;
