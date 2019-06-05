@@ -151,12 +151,13 @@
        //  var w = "/admin/vksort/export?id="+ _list[0];
 
         $.ajax({
-            //data:{
-            //},
             type: 'POST',
             url: url,
             success:function(){
+                alert("111");
+
                 window.location.href=url;
+               // window.open("/fileSuffix/"+www+".xls","","");
                 flag = 1;
                // setInterval(increment,100);
             },
@@ -167,20 +168,19 @@
 
 
     <!--进度条-->
-   // $(function(){
-
 
     var div = document.getElementById("load-bar-inner");
 
         function increment(){
             if(current < 100 &&  click == 1){
-                //setInterval(increment,100);
                 $("#h11").text('正在导出');
                 $("#p11").text('请等待...');
                 $('#counter').html(current + '%');
                 div.style.width = current + '%';
                 current++;
-            }else if (current >= 100 && flag == 1){
+            }
+            //else if (current >= 100 && flag == 1){
+            if ( flag == 1){
                 $('#counter').html('100%');
                 $("#h11").text('导出成功！');
                 $("#p11").text('');
@@ -190,26 +190,17 @@
 
 
                 flag = 2;
-                //current = 100;
 
             }
 
             if( flag == 2){
                 $("#wrapper").fadeOut(1800);
                 current = 0;
-                // div.style.width = '0%';
-                // $('#counter').html('0%');
-                // $("#h11").text('正在导出');
-                // $("#p11").text('请等待...');
                 flag = 0;
                 click = 0;
             }
         }
 
-
-
-
-    //});
     <!--进度条-->
 
 

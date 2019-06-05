@@ -146,7 +146,7 @@ public class VksortController extends BaseController {
      */
     @RequestMapping("export")
     @ResponseBody
-    public String export(HttpServletRequest request,Long id) {
+    public String export(HttpServletRequest request,Long id,HttpServletResponse response) {
 
         QueryWrapper<Vksort> queryWrapper = new QueryWrapper<Vksort>();
         queryWrapper = queryWrapper.eq("id",id);
@@ -155,6 +155,8 @@ public class VksortController extends BaseController {
         String tiaojian1 = biao.getSort();
 
         String area = biao.getProvince();
+
+         //String aa = null;
 
 
         //将分类和地区进行转码
@@ -196,6 +198,9 @@ public class VksortController extends BaseController {
                 List<Vk> infoList = vkService.selectAll(Long.valueOf(tableid));
                 ex.exportPersonInfo1(filename1, infoList);
                 ex.saveExcel(response);
+
+                //aa = "1";
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -230,6 +235,7 @@ public class VksortController extends BaseController {
 
                 ex.exportPersonInfo1(filename1, infoList);
                 ex.saveExcel(response);
+              //  aa = "1";
 
             } catch (Exception e) {
                 e.printStackTrace();
