@@ -1,6 +1,8 @@
 package com.mbyte.easy.util;
 
+import com.mbyte.easy.admin.entity.TCompany;
 import com.mbyte.easy.admin.entity.Zbj;
+import com.mbyte.easy.admin.service.ITCompanyService;
 import com.mbyte.easy.admin.service.IZbjService;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -153,6 +155,51 @@ public class ReptileUtil {
                     zbjService.save(zbj);
 
                 }
+
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+
+    }
+
+    /**
+     *@Author wangxudong
+     *@Description: 生成信息
+     *@Date:
+     **/
+
+    public void zbjGenerateInfo(String url, Long id, ITCompanyService tCompanyService) {
+
+        Document doc = null;
+        try {
+            //获取html文件
+            doc = Jsoup.connect(url).get();
+
+            Elements listDiv = doc.getElementsByAttributeValue("class", "witkey-info");
+
+            for (Element text : listDiv) {
+
+                Elements a = text.getElementsByTag("a");                       //公司名称
+                Elements s0 = text.getElementsByClass("city-icon");           //所在地区
+                Elements s1 = text.getElementsByClass("score");               //综合评分
+                Elements s2 = text.getElementsByAttribute("title");                 //所属类型
+                Elements s3 = text.getElementsByClass("bz-border");           //信誉度
+
+                TCompany tCompany = new TCompany();
+                tCompany.setCompanyName(a.get(1).text());
+                tCompany.setCompanyStates(1);
+                String html = a.get(1).attr("href");
+                String ht = "https:";
+                String link = ht.concat(html);
+                tCompany.setCompanyUrl(link);
+
+                tCompanyService.save(tCompany);
+
+
+
+            }
 
         } catch (IOException e) {
             // TODO Auto-generated catch block

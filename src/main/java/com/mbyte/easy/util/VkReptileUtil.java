@@ -1,9 +1,12 @@
 package com.mbyte.easy.util;
 
+import com.mbyte.easy.admin.entity.TCompany;
 import com.mbyte.easy.admin.entity.Vk;
 import com.mbyte.easy.admin.entity.Zbj;
+import com.mbyte.easy.admin.service.ITCompanyService;
 import com.mbyte.easy.admin.service.IVkService;
 import com.mbyte.easy.admin.service.IZbjService;
+import org.apache.poi.ss.formula.functions.T;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -186,6 +189,67 @@ public class VkReptileUtil {
                     vkService.save(vk);
                     }
                 }
+
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+
+    }
+
+    /**
+     *@Author wangxudong
+     *@Description: 生成规则
+     *@Date:
+     **/
+    public void vkGenerateInfo(String url, Long id, ITCompanyService tCompanyService) {
+
+        Document doc = null;
+        try {
+            //获取html文件
+            doc = Jsoup.connect(url).get();
+
+            String aaa = doc.getElementsByAttributeValue("id", "textfield").val(); //获取查询类别
+
+            System.out.println("返回type=========="+aaa);
+
+            Elements listDiv = doc.getElementsByAttributeValue("class", "w_servicslist_box_txt");
+
+            for (Element text : listDiv) {
+
+
+                Elements a = text.getElementsByTag("a");                            //title
+                Elements s0 = text.getElementsByClass("red");                     //price
+
+                Elements s11 = text.getElementsByAttributeValue("class", "f_l");  //num province
+                Elements s12 = text.getElementsByAttributeValue("class", "f_r");  //score
+
+
+
+                String regEx = "[^0-9.]";
+                Pattern pattern = Pattern.compile(regEx);
+                Matcher m = pattern.matcher(s11.get(0).text());
+
+                String num = m.replaceAll("").trim();
+
+
+                Matcher n = pattern.matcher(s12.get(0).text());
+                String score = n.replaceAll("").trim();
+
+                if(s11.get(1).text().indexOf("河北省")>-1){
+                    String html = a.get(1).attr("href");
+                    TCompany tCompany = new TCompany();
+                      tCompany.setCompanyName(a.get(1).text());
+                      tCompany.setCompanyStates(1);
+                      tCompany.setCompanyUrl(html);
+                      if( tCompanyService.selectByUrl(html) == null){
+                          tCompanyService.save(tCompany);
+                      }
+
+
+                }
+            }
 
         } catch (IOException e) {
             // TODO Auto-generated catch block
