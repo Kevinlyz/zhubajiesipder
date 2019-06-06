@@ -62,4 +62,9 @@ public class Vk  extends BaseEntity {
      */
     private String link;
 
+    /**
+     * 公司类型
+     */
+    private String companyType;
+
 }

@@ -117,7 +117,12 @@ public class VkReptileUtil {
     public void geInfo(String url, Long id, IVkService vkService) {
 
         Document doc = null;
+
+
+
+
         try {
+
             //获取html文件
             doc = Jsoup.connect(url).get();
 
@@ -126,6 +131,8 @@ public class VkReptileUtil {
             System.out.println("返回type=========="+aaa);
 
             Elements listDiv = doc.getElementsByAttributeValue("class", "w_servicslist_box_txt");
+
+            //Elements listDiv1 = doc.getElementsByAttributeValue("class", "w_servicslist_box_txt");
 
                 for (Element text : listDiv) {
 
@@ -165,6 +172,20 @@ public class VkReptileUtil {
 
                     String html = a.get(1).attr("href");
                     vk.setLink(html);
+
+
+                        /*获取 公司/个人/工作室 类型*/
+                        Document doc1 = null;
+                        doc1 = Jsoup.connect(html).get();
+                        Elements list1 = doc1.getElementsByClass("iico");
+
+                        String companyType = list1.get(2).text();
+
+                        vk.setCompanyType(companyType);
+                       // System.out.println("======dddddd=======");
+                        //System.out.println(companyType);
+
+                        /*获取类型*/
 
                     vkService.save(vk);
                     }

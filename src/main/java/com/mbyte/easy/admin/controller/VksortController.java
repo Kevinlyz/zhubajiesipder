@@ -148,6 +148,7 @@ public class VksortController extends BaseController {
     @ResponseBody
     public String export(HttpServletRequest request,Long id,HttpServletResponse response) {
 
+
         QueryWrapper<Vksort> queryWrapper = new QueryWrapper<Vksort>();
         queryWrapper = queryWrapper.eq("id",id);
         Vksort biao = vksortService.getOne(queryWrapper);
@@ -188,7 +189,7 @@ public class VksortController extends BaseController {
             queryWrapper2 = queryWrapper2.eq("sort_id", tableid);
 
             String sk = "一品威客"+area+tiaojian1+"类别信息表";
-            String[] rowsName = new String[]{"序号", "标题","价格", "公司名称", "地址", "链接", "类型", "成交量", "综合评分"};
+            String[] rowsName = new String[]{"序号", "标题","价格", "公司名称", "公司类型","地址", "链接", "任务类型", "成交量", "综合评分"};
             String filename1 = "一品威客"+area+tiaojian1+"类别信息表";
             ExportExcel ex = new ExportExcel(sk, rowsName);
             try {
@@ -223,7 +224,7 @@ public class VksortController extends BaseController {
             queryWrapper2 = queryWrapper2.eq("sort_id", tableid);
 
             String sk = "一品威客"+area+tiaojian1+"类别信息表";
-            String[] rowsName = new String[]{"序号", "标题","价格", "公司名称", "地址", "链接", "类型", "成交量", "综合评分"};
+            String[] rowsName = new String[]{"序号", "标题","价格", "公司名称","公司类型", "地址", "链接", "任务类型", "成交量", "综合评分"};
             String filename1 = "一品威客"+area+tiaojian1+"类别信息表";
             ExportExcel ex = new ExportExcel(sk, rowsName);
             try {

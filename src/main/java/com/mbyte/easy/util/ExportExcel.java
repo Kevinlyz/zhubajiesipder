@@ -195,7 +195,7 @@ public class ExportExcel {
                 //合并列
                 HSSFCell cell=row.createCell(0);
                 cell.setCellValue(sheetTitle);
-                CellRangeAddress region=new CellRangeAddress(1, 1, 0, 7);
+                CellRangeAddress region=new CellRangeAddress(1, 1, 0, 9);
                 sheet.addMergedRegion(region);
                 cell.setCellType(HSSFCell.CELL_TYPE_STRING);
                 cell.setCellStyle(headStyle);
@@ -220,22 +220,26 @@ public class ExportExcel {
                 cell4.setCellValue(dataList.get(i).getCompany());
 
                 HSSFCell cell5 = row.createCell(4, HSSFCell.CELL_TYPE_STRING);
+                cell4.setCellStyle(numberStyle);
+                cell4.setCellValue(dataList.get(i).getCompanyType());
+
+                HSSFCell cell6 = row.createCell(5, HSSFCell.CELL_TYPE_STRING);
                 cell5.setCellStyle(numberStyle);
                 cell5.setCellValue(dataList.get(i).getProvince());
 
-                HSSFCell cell6 = row.createCell(5, HSSFCell.CELL_TYPE_STRING);
+                HSSFCell cell7 = row.createCell(6, HSSFCell.CELL_TYPE_STRING);
                 cell6.setCellStyle(numberStyle);
                 cell6.setCellValue(dataList.get(i).getLink());
 
-                HSSFCell cell7 = row.createCell(6, HSSFCell.CELL_TYPE_STRING);
+                HSSFCell cell8 = row.createCell(7, HSSFCell.CELL_TYPE_STRING);
                 cell7.setCellStyle(numberStyle);
                 cell7.setCellValue(dataList.get(i).getType());
 
-                HSSFCell cell8 = row.createCell(7, HSSFCell.CELL_TYPE_STRING);
+                HSSFCell cell9 = row.createCell(8, HSSFCell.CELL_TYPE_STRING);
                 cell8.setCellStyle(numberStyle);
                 cell8.setCellValue(dataList.get(i).getNum());
 
-                HSSFCell cell9 = row.createCell(8, HSSFCell.CELL_TYPE_STRING);
+                HSSFCell cell10 = row.createCell(9, HSSFCell.CELL_TYPE_STRING);
                 cell9.setCellStyle(numberStyle);
                 cell9.setCellValue(dataList.get(i).getScore());
 

@@ -12,11 +12,13 @@
       <id column="title" jdbcType="VARCHAR" property="title" />
       <id column="price" jdbcType="VARCHAR" property="price" />
       <id column="type" jdbcType="VARCHAR" property="type" />
+      <id column="company_type" jdbcType="VARCHAR" property="companyType" />
+
 
   </resultMap>
   <sql id="Base_Column_List">
               id,
-      sort_id, num, score, company, link,province,title,price,type
+      sort_id, num, score, company, link,province,title,price,type,company_type
   </sql>
 
     <select id="selectAll" parameterType="java.lang.Long" resultMap="BaseResultMap">
