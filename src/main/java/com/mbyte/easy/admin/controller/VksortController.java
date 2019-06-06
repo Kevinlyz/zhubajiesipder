@@ -123,7 +123,7 @@ public class VksortController extends BaseController {
         QueryWrapper<Vk> queryWrapper = new QueryWrapper<Vk>();
         queryWrapper = queryWrapper.eq("sort_id",id);
         vkService.remove(queryWrapper);
-        return toAjax(vkService.removeById(id));
+        return toAjax(vksortService.removeById(id));
     }
     /**
     * 批量删除
@@ -136,8 +136,8 @@ public class VksortController extends BaseController {
 
         QueryWrapper<Vk> queryWrapper = new QueryWrapper<Vk>();
         queryWrapper = queryWrapper.eq("sort_id",ids);
-        vkService.remove(queryWrapper);
-        return toAjax(vkService.removeByIds(ids));
+       // vkService.remove(queryWrapper);
+        return toAjax(vksortService.removeByIds(ids));
     }
 
     /**

@@ -131,7 +131,7 @@ public class SortController extends BaseController {
 
         QueryWrapper<Zbj> queryWrapper = new QueryWrapper<Zbj>();
         queryWrapper = queryWrapper.eq("fenlei_id",ids);
-        zbjService.remove(queryWrapper);
+       // zbjService.remove(queryWrapper);
         return toAjax(sortService.removeByIds(ids));
     }
 
