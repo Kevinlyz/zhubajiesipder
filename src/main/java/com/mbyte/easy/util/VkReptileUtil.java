@@ -238,8 +238,14 @@ public class VkReptileUtil {
                 Matcher n = pattern.matcher(s12.get(0).text());
                 String score = n.replaceAll("").trim();
 
+
                 if(s11.get(1).text().indexOf("河北省")>-1){
                     String html = a.get(1).attr("href");
+                    Document doc1 = null;
+                    doc1 = Jsoup.connect(html).get();
+                    Elements list1 = doc1.getElementsByClass("iico");
+                    String companyType = list1.get(2).text();
+                    if(companyType.equals("公司")||companyType.equals("工作室")){
                     TCompany tCompany = new TCompany();
                       tCompany.setCompanyName(a.get(1).text());
                       tCompany.setCompanyStates(1);
@@ -258,6 +264,7 @@ public class VkReptileUtil {
                       }
 
 
+                }
                 }
             }
 
