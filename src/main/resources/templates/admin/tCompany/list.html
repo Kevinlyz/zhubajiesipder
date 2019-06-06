@@ -33,11 +33,27 @@
 
                     <div class="cl pd-5 bg-1 bk-gray ">
                         <div class="searchByField">
-                            <input type="input-text" class="input-text"style="width: 15%;margin-left: 4%; float: left; " th:value="${searchInfo.companyName}" name="companyName" placeholder="搜索公司名称" sid="companyName"/>
-<!--                            <input type="input-text" class="input-text"style="width: 15%;margin-left: 2%; float: left; " th:value="${searchInfo.companyUrl}" name="companyUrl" placeholder="搜索公司地址" sid="companyUrl"/>-->
+                            <input type="input-text" class="input-text" style="width: 13%;margin-left: 2%;   float: left; " th:value="${searchInfo.companyName}" name="companyName" placeholder="搜索公司名称" sid="companyName"/>
+                            <select class="input-text"  placeholder="dff" style="width: 13%; margin-left: 2%;margin-top: 5px; float: left; "name="credit" id="credit" sid="credit"/>
+                            <option value=""disabled="disabled" selected>搜索信誉度</option>
+                            <option value="1">信誉度为0</option>
+                            <option value="2">信誉度不为0</option>
+                            </select>
 
-                            <select class="input-text" style="width: 15%;margin-left: 4%;margin-top: 5px; float: left; "name="companyStates" id="companyStates" sid="companyStates"/>
-                            <option value="">按公司状态搜索</option>
+                            <select class="input-text" style="width: 13%;margin-left: 2%;margin-top: 5px; float: left; "name="score" id="score" sid="score"/>
+                            <option value=""disabled="disabled"selected>搜索评分</option>
+                            <option value="1">评分为0</option>
+                            <option value="2">评分不为0</option>
+                            </select>
+
+                            <select class="input-text" style="width: 13%;margin-left: 2%;margin-top: 5px; float: left; "name="num" id="num" sid="num"/>
+                            <option value=""disabled="disabled"selected>销量排名</option>
+                            <option value="1">从低到高</option>
+                            <option value="2">从高到低</option>
+                            </select>
+
+                            <select class="input-text" style="width: 13%;margin-left: 2%;margin-top: 5px; float: left; "name="companyStates" id="companyStates" sid="companyStates"/>
+                            <option value=""disabled="disabled"selected>按公司状态搜索</option>
                             <option value="1">等待处理</option>
                             <option value="2">正在联系</option>
                             <option value="3">联系成功</option>
@@ -45,7 +61,7 @@
                             <option value="5">已废弃</option>
                             </select>
 
-                            <input type="input-text" class="input-text" style="width: 15%;margin-left: 4%; float: left; "th:value="${searchInfo.myMarks}" name="myMarks" placeholder="搜索备注" sid="myMarks"/>
+                            <input type="input-text" class="input-text" style="width: 13%;margin-left: 2%; float: left; "th:value="${searchInfo.myMarks}" name="myMarks" placeholder="搜索备注" sid="myMarks"/>
                             <button type="submit"
                                     class="layui-btn  layui-btn-success radius"><i
                                         class="Hui-iconfont">&#xe665;</i> 搜索
@@ -58,11 +74,14 @@
                         <tr class="text-c">
                             <th width="25"><input type="checkbox" name="" value=""/></th>
                             <th width="25">序号</th>
-                                <th width="40">公司名称</th>
-                                <th width="40">公司地址</th>
-                                <th width="40">公司状态</th>
-                                <th width="40">创建时间</th>
-                                <th width="40">备注</th>
+                            <th width="40">公司名称</th>
+                            <th width="40">公司地址</th>
+                            <th width="40">信誉度</th>
+                            <th width="40">评分</th>
+                            <th width="40">成交量</th>
+                            <th width="40">公司状态</th>
+                            <th width="40">创建时间</th>
+                            <th width="40">备注</th>
                             <th width="100">操作</th>
                         </tr>
                         </thead>
@@ -76,6 +95,9 @@
                             <td th:text="${count.count}"></td>
                             <td th:text="${tCompany.companyName}"></td>
                             <td><a th:text="${tCompany.companyUrl}" target="_blank" th:href="@{${tCompany.companyUrl}}"></a></td>
+                            <td th:text="${tCompany.credit}"></td>
+                            <td th:text="${tCompany.score}"></td>
+                            <td th:text="${tCompany.num}"></td>
                             <td th:if="${tCompany.companyStates} == 1">等待处理</td>
                             <td th:if="${tCompany.companyStates} == 2">正在联系</td>
                             <td th:if="${tCompany.companyStates} == 3">联系成功</td>

@@ -180,24 +180,35 @@ public class ReptileUtil {
             Elements listDiv = doc.getElementsByAttributeValue("class", "witkey-info");
 
             for (Element text : listDiv) {
-
                 Elements a = text.getElementsByTag("a");                       //公司名称
                 Elements s0 = text.getElementsByClass("city-icon");           //所在地区
                 Elements s1 = text.getElementsByClass("score");               //综合评分
                 Elements s2 = text.getElementsByAttribute("title");                 //所属类型
                 Elements s3 = text.getElementsByClass("bz-border");           //信誉度
 
-                TCompany tCompany = new TCompany();
-                tCompany.setCompanyName(a.get(1).text());
-                tCompany.setCompanyStates(1);
-                String html = a.get(1).attr("href");
-                String ht = "https:";
-                String link = ht.concat(html);
-                tCompany.setCompanyUrl(link);
+                if (s2 != null && s2.get(0).html().equals("企业")) {
+                    TCompany tCompany = new TCompany();
+                    tCompany.setCompanyName(a.get(1).text());
+                    tCompany.setCompanyStates(1);
+                    String html = a.get(1).attr("href");
+                    String ht = "https:";
+                    String link = ht.concat(html);
+                    tCompany.setCompanyUrl(link);
+                    tCompany.setNum(0);
+                    if (s3.text().equals("")) {
+                        tCompany.setCredit(0);
+                    } else {
+                        tCompany.setCredit(Integer.parseInt(s3.text()));
+                    }
 
-                tCompanyService.save(tCompany);
+                    tCompany.setScore(String.valueOf(Math.round(Float.parseFloat(s1.get(0).html())*20*10)/10));
 
 
+                    if (tCompanyService.selectByUrl(html) == null) {
+                        tCompanyService.save(tCompany);
+                    }
+
+                }
 
             }
 

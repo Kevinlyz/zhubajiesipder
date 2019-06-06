@@ -8,11 +8,14 @@
       <id column="company_states" jdbcType="INTEGER" property="companyStates" />
       <id column="create_time" jdbcType="TIMESTAMP" property="createTime" />
       <id column="my_marks" jdbcType="VARCHAR" property="myMarks" />
+      <id column="credit" jdbcType="INTEGER" property="credit" />
+      <id column="score" jdbcType="VARCHAR" property="score" />
+      <id column="num" jdbcType="VARCHAR" property="num" />
 
   </resultMap>
   <sql id="Base_Column_List">
               id,
-      company_name, company_url, company_states, create_time, my_marks
+      company_name, company_url, company_states, create_time, my_marks, credit, score, num
   </sql>
 
 

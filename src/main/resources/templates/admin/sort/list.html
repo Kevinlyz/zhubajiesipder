@@ -129,10 +129,6 @@
 
         click = 1;
 
-        var bar = document.getElementById("wrapper");
-
-        bar.style.display = (bar.style.display.match("block")) ? "none" : "block";
-        setInterval(increment,100);
 
 
         var _list = new Array();
@@ -148,8 +144,14 @@
             layer.msg("只能导出一条信息");
             return false;
         }
+        if(_list.length == 1){
+            var bar = document.getElementById("wrapper");
+
+            bar.style.display = (bar.style.display.match("block")) ? "none" : "block";
+            setInterval(increment,100);
+        }
+
         url = url + _list[0];
-       // window.open(url);
 
 
         $.ajax({
@@ -157,8 +159,9 @@
             url: url,
             success:function(){
                 window.location.href=url;
+
                 flag = 1;
-                // setInterval(increment,100);
+
             },
 
         });
@@ -170,25 +173,28 @@
 
         click = 1;
 
-        var bar = document.getElementById("wrapper");
-
-        bar.style.display = (bar.style.display.match("block")) ? "none" : "block";
-        setInterval(increment,100);
-
-
         var _list = new Array();
         $('input[name="id"]:checked').each(
             function (i) {
                 _list[i] = $(this).val();
             });
         if(_list.length == 0){
-            layer.msg("请选择要导出的信息");
+            layer.msg("请选择要生成的信息");
             return false;
         }
         if(_list.length != 1){
-            layer.msg("只能导出一条信息");
+            layer.msg("只能生成一条信息");
             return false;
         }
+
+        if(_list.length == 1){
+            var bar = document.getElementById("wrapper");
+
+            bar.style.display = (bar.style.display.match("block")) ? "none" : "block";
+            setInterval(zbjGenerateBar,100);
+        }
+
+
         url = url + _list[0];
         // window.open(url);
 
@@ -199,7 +205,8 @@
             type: 'POST',
             url: url,
             success:function(){
-                window.location.href=url;
+                // window.location.href=url;
+
                 flag = 1;
                 // setInterval(increment,100);
             },
@@ -207,7 +214,7 @@
         });
     }
 
-    <!--进度条-->
+    <!--导出进度条-->
 
     var div = document.getElementById("load-bar-inner");
 
@@ -240,7 +247,36 @@
         }
     }
 
-    <!--进度条-->
+    <!--导出进度条-->
+//    生成进度条
+    function zbjGenerateBar(){
+        if(current < 100 &&  click == 1){
+            $("#h11").text('正在生成');
+            $("#p11").text('请等待...');
+            $('#counter').html(current + '%');
+            div.style.width = current + '%';
+            current++;
+        }
+        if ( flag == 1){
+            $('#counter').html('100%');
+            $("#h11").text('生成成功！');
+            $("#p11").text('');
+
+            div.style.width = '100%';
+
+
+
+            flag = 2;
+
+        }
+
+        if( flag == 2){
+            $("#wrapper").fadeOut(1800);
+            current = 0;
+            flag = 0;
+            click = 0;
+        }
+    }
 </script>
 </body>
 </html>

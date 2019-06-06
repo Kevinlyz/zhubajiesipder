@@ -14,6 +14,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.net.URLEncoder;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -222,6 +223,15 @@ public class VkReptileUtil {
                       tCompany.setCompanyName(a.get(1).text());
                       tCompany.setCompanyStates(1);
                       tCompany.setCompanyUrl(html);
+
+                      if( score.equals("")){
+                          score = 0+"";
+                      }
+
+                      tCompany.setScore( String.valueOf(Math.round(Float.parseFloat(score)*10)/10));
+
+                     tCompany.setCredit(0);
+                      tCompany.setNum(Integer.parseInt(num));
                       if( tCompanyService.selectByUrl(html) == null){
                           tCompanyService.save(tCompany);
                       }

@@ -130,10 +130,7 @@
 
         click = 1;
 
-        var bar = document.getElementById("wrapper");
 
-        bar.style.display = (bar.style.display.match("block")) ? "none" : "block";
-        setInterval(increment,100);
 
 
         var _list = new Array();
@@ -149,9 +146,16 @@
             layer.msg("只能导出一条信息");
             return false;
         }
+
+        if(_list.length == 1){
+            var bar = document.getElementById("wrapper");
+
+            bar.style.display = (bar.style.display.match("block")) ? "none" : "block";
+            setInterval(increment,100);
+        }
+
         url = url + _list[0];
-        //window.open(url);
-       //  var w = "/admin/vksort/export?id="+ _list[0];
+
 
         $.ajax({
             type: 'POST',
@@ -160,9 +164,10 @@
                 alert("111");
 
                 window.location.href=url;
-               // window.open("/fileSuffix/"+www+".xls","","");
+
+
                 flag = 1;
-               // setInterval(increment,100);
+
             },
 
         });
@@ -175,10 +180,7 @@
 
         click = 1;
 
-        var bar = document.getElementById("wrapper");
 
-        bar.style.display = (bar.style.display.match("block")) ? "none" : "block";
-        setInterval(increment,100);
 
 
         var _list = new Array();
@@ -194,9 +196,16 @@
             layer.msg("只能生成一条信息");
             return false;
         }
+
+        if(_list.length == 1){
+            var bar = document.getElementById("wrapper");
+
+            bar.style.display = (bar.style.display.match("block")) ? "none" : "block";
+            setInterval(vkGenerateBar,100);
+        }
+
+
         url = url + _list[0];
-        //window.open(url);
-        //  var w = "/admin/vksort/export?id="+ _list[0];
 
         $.ajax({
             //data:{
@@ -204,10 +213,10 @@
             type: 'POST',
             url: url,
             success:function(){
-                window.location.href=url;
+                // window.location.href=url;
+
                 flag = 1;
-                // setInterval(increment,100);
-            },
+             },
 
         });
 
@@ -215,7 +224,7 @@
 
 
 
-    <!--进度条-->
+    // 导出进度条
 
     var div = document.getElementById("load-bar-inner");
 
@@ -234,9 +243,6 @@
                 $("#p11").text('');
 
                 div.style.width = '100%';
-
-
-
                 flag = 2;
 
             }
@@ -249,8 +255,36 @@
             }
         }
 
-    <!--进度条-->
+    //生成进度条
+    function vkGenerateBar(){
+        if(current < 100 &&  click == 1){
+            $("#h11").text('正在生成');
+            $("#p11").text('请等待...');
+            $('#counter').html(current + '%');
+            div.style.width = current + '%';
+            current++;
+        }
+        //else if (current >= 100 && flag == 1){
+        if ( flag == 1){
+            $('#counter').html('100%');
+            $("#h11").text('生成成功！');
+            $("#p11").text('');
 
+            div.style.width = '100%';
+
+
+
+            flag = 2;
+
+        }
+
+        if( flag == 2){
+            $("#wrapper").fadeOut(1800);
+            current = 0;
+            flag = 0;
+            click = 0;
+        }
+    }
 
 </script>
 </body>

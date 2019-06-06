@@ -77,7 +77,21 @@ public class TCompanyController extends BaseController  {
          }
         if(!ObjectUtils.isEmpty(tCompany.getMyMarks())) {
             queryWrapper = queryWrapper.like("my_marks",tCompany.getMyMarks());
-         }
+        }
+        if(!ObjectUtils.isEmpty(tCompany.getCredit())) {
+
+            if(tCompany.getCredit()==1){queryWrapper = queryWrapper.eq("credit",0);}
+            else {queryWrapper.ne("credit",0);}
+        }
+        if(!ObjectUtils.isEmpty(tCompany.getScore())) {
+            if(tCompany.getScore().equals("1")){queryWrapper = queryWrapper.eq("credit","0");}
+            else {queryWrapper.ne("credit","0");}
+        }
+        if(!ObjectUtils.isEmpty(tCompany.getNum())) {
+            if(tCompany.getNum() == 1){queryWrapper = queryWrapper.orderByAsc("num");}
+            else {queryWrapper.orderByDesc("num");}
+        }
+
         queryWrapper.orderByDesc("id");
         IPage<TCompany> pageInfo = tCompanyService.page(page, queryWrapper);
         model.addAttribute("searchInfo", tCompany);

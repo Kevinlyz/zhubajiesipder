@@ -50,5 +50,20 @@ public class TCompany extends BaseEntity {
      */
     private String myMarks;
 
+    /**
+     * 评分
+     */
+   private String score;
+
+    /**
+     * 信誉度
+     */
+    private Integer credit;
+
+    /**
+     * 成交量
+     */
+    private Integer num;
+
 
 }
