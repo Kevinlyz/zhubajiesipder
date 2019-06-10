@@ -245,7 +245,7 @@ public class VkReptileUtil {
                     doc1 = Jsoup.connect(html).get();
                     Elements list1 = doc1.getElementsByClass("iico");
                     String companyType = list1.get(2).text();
-                    if(companyType.equals("公司")||companyType.equals("工作室")){
+                    if(companyType.equals("公司")){
                     TCompany tCompany = new TCompany();
                       tCompany.setCompanyName(a.get(1).text());
                       tCompany.setCompanyStates(1);

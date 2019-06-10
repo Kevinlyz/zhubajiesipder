@@ -84,8 +84,8 @@ public class TCompanyController extends BaseController  {
             else {queryWrapper.ne("credit",0);}
         }
         if(!ObjectUtils.isEmpty(tCompany.getScore())) {
-            if(tCompany.getScore().equals("1")){queryWrapper = queryWrapper.eq("credit","0");}
-            else {queryWrapper.ne("credit","0");}
+            if(tCompany.getScore().equals("1")){queryWrapper = queryWrapper.eq("score","0");}
+            else {queryWrapper.ne("score","0");}
         }
         if(!ObjectUtils.isEmpty(tCompany.getNum())) {
             if(tCompany.getNum() == 1){queryWrapper = queryWrapper.orderByAsc("num");}
@@ -204,7 +204,7 @@ public class TCompanyController extends BaseController  {
             Integer k = tit.sePageUrl(urlOne)[2];               //第三页k值
             System.out.println(a + "bbbbbbbbbbbb");
 
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i <a; i++) {
 
                 //Integer h = j + (k * i);
                 //http://www.epwk.com/fuwu/p2.html?z=%E6%B2%B3%E5%8C%97%E7%9C%81&k=%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91

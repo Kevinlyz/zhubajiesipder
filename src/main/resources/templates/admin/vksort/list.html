@@ -14,8 +14,8 @@
     <div class="load-bar" id="load-bar">
         <div class="load-bar-inner" id="load-bar-inner" data-loading="0"> <span id="counter"></span> </div>
     </div>
-    <h1 id="h11">正在导出</h1>
-    <p id="p11">请等待... </p>
+    <h1 id="h11"></h1>
+    <p id="p11"></p>
 </div>
 <!--进度条-->
 
@@ -130,9 +130,6 @@
 
         click = 1;
 
-
-
-
         var _list = new Array();
         $('input[name="id"]:checked').each(
             function (i) {
@@ -178,12 +175,7 @@
 
         click = 1;
 
-
-        bar.style.display = (bar.style.display.match("block")) ? "none" : "block";
-        setInterval(increment,250);
-
-
-        var _list = new Array();
+               var _list = new Array();
         $('input[name="id"]:checked').each(
             function (i) {
                 _list[i] = $(this).val();
@@ -201,7 +193,8 @@
             var bar = document.getElementById("wrapper");
 
             bar.style.display = (bar.style.display.match("block")) ? "none" : "block";
-            setInterval(vkGenerateBar,100);
+            setInterval(vkGenerateBar,250);
+
         }
 
 
