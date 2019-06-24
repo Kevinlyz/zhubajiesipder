@@ -51,11 +51,11 @@
                             <div class="formControls col-xs-10 col-sm-10">
                                 <select class="input-text" name="companyStates" id="companyStates"/>
                                 <option th:value="${tCompany.companyStates}">修改公司状态</option>
-                                <option value="1">等待处理</option>
-                                <option value="2">正在联系</option>
-                                <option value="3">联系成功</option>
-                                <option value="4">无法联系</option>
-                                <option value="5">已废弃</option>
+                                <option value=1 th:text="等待处理" th:selected="${tCompany.companyStates eq 1}"></option>
+                                <option value=2 th:text="正在联系" th:selected="${tCompany.companyStates eq 2}"></option>
+                                <option value=3 th:text="联系成功" th:selected="${tCompany.companyStates eq 3}"></option>
+                                <option value=4 th:text="无法联系" th:selected="${tCompany.companyStates eq 4}"></option>
+                                <option value=5 th:text="已废弃" th:selected="${tCompany.companyStates eq 5}"></option>
                                 </select><br>
                             </div>
                     </div>
@@ -97,10 +97,6 @@
         {
             required: true,
         },
-        // myMarks:
-        // {
-        //     required: true,
-        // },
     },
         onkeyup:false,
             debug
