@@ -35,30 +35,31 @@
                         <div class="searchByField">
                             <input type="input-text" class="input-text" style="width: 13%;margin-left: 2%;   float: left; " th:value="${searchInfo.companyName}" name="companyName" placeholder="搜索公司名称" sid="companyName"/>
                             <select class="input-text"  placeholder="dff" style="width: 13%; margin-left: 2%;margin-top: 5px; float: left; "name="credit" id="credit" sid="credit"/>
-                            <option value=""disabled="disabled" selected>搜索信誉度</option>
-                            <option value="1">信誉度为0</option>
-                            <option value="2">信誉度不为0</option>
+                            <option value="" disabled="disabled" selected>搜索信誉度</option>
+                            <option value="1" th:text="信誉度为0" th:selected="${searchInfo.credit eq 1}"></option>
+                            <option value="2" th:text="信誉度不为0" th:selected="${searchInfo.credit eq 2}"></option>
                             </select>
 
                             <select class="input-text" style="width: 13%;margin-left: 2%;margin-top: 5px; float: left; "name="score" id="score" sid="score"/>
-                            <option value=""disabled="disabled"selected>搜索评分</option>
-                            <option value="1">评分为0</option>
-                            <option value="2">评分不为0</option>
+                            <option value=""disabled="disabled" selected>搜索评分</option>
+                            <option value="1" th:text="评分为0" th:selected="${searchInfo.score eq '1'}"></option>
+                            <option value="2" th:text="评分不为0" th:selected="${searchInfo.score eq '2'}"></option>
                             </select>
 
                             <select class="input-text" style="width: 13%;margin-left: 2%;margin-top: 5px; float: left; "name="num" id="num" sid="num"/>
                             <option value=""disabled="disabled"selected>成交量排名</option>
-                            <option value="1">从低到高</option>
-                            <option value="2">从高到低</option>
+                            <option value="1" th:text="从低到高" th:selected="${searchInfo.num eq 1}"></option>
+                            <option value="2" th:text="从高到低" th:selected="${searchInfo.num eq 2}">从高到低</option>
                             </select>
-
+                            <!--<span th:value="${searchInfo.companyName}"></span>-->
                             <select class="input-text" style="width: 13%;margin-left: 2%;margin-top: 5px; float: left; "name="companyStates" id="companyStates" sid="companyStates"/>
                             <option value=""disabled="disabled"selected>按公司状态搜索</option>
-                            <option value="1">等待处理</option>
-                            <option value="2">正在联系</option>
-                            <option value="3">联系成功</option>
-                            <option value="4">无法联系</option>
-                            <option value="5">已废弃</option>
+                            <!--<option th:value="${tCompany.companyStates}">修改公司状态</option>-->
+                            <option value=1 th:text="等待处理" th:selected="${searchInfo.companyStates eq 1}"></option>
+                            <option value=2 th:text="正在联系" th:selected="${searchInfo.companyStates eq 2}"></option>
+                            <option value=3 th:text="联系成功" th:selected="${searchInfo.companyStates eq 3}"></option>
+                            <option value=4 th:text="无法联系" th:selected="${searchInfo.companyStates eq 4}"></option>
+                            <option value=5 th:text="已废弃" th:selected="${searchInfo.companyStates eq 5}"></option>
                             </select>
 
                             <input type="input-text" class="input-text" style="width: 13%;margin-left: 2%; float: left; "th:value="${searchInfo.myMarks}" name="myMarks" placeholder="搜索备注" sid="myMarks"/>
