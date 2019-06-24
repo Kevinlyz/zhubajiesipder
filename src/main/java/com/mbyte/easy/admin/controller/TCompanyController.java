@@ -166,98 +166,106 @@ public class TCompanyController extends BaseController  {
     }
 
     /**
-     *@Author wangxudong
-     *@Description:
-     *@Date:
+     * @Author wangxudong UpdateBy：kevinlyz
+     * @Description 一品威客批量爬取数据至数据库
+     * @Date 21:03 2019-06-24
+     * @Param [request, ids]
+     * @return java.lang.String 返回状态码 1
      **/
     @RequestMapping("vkGenerate")
     @ResponseBody
-       public String vkGenerate(HttpServletRequest request, Long id) {
-        QueryWrapper<Vksort> queryWrapper = new QueryWrapper<Vksort>();
-        queryWrapper = queryWrapper.eq("id",id);
-        Vksort biao = vksortService.getOne(queryWrapper);
-        String tiaojian1 = biao.getSort();
-        String area = biao.getProvince();
+       public String vkGenerate(HttpServletRequest request,@RequestBody List<Long> ids) {
+        System.out.println("一品威客"+ids);
+        for (Long id : ids) {
+            QueryWrapper<Vksort> queryWrapper = new QueryWrapper<Vksort>();
+            queryWrapper = queryWrapper.eq("id",id);
+            Vksort biao = vksortService.getOne(queryWrapper);
+            String tiaojian1 = biao.getSort();
+            String area = biao.getProvince();
 
-        //将分类和地区进行转码
-        String nameUrl = ReptileUtil.urlEncodeURL(tiaojian1);
-        String areaUrl = ReptileUtil.urlEncodeURL(area);
-        System.out.println("输出："+tiaojian1+area+nameUrl+areaUrl);
-        /**
-         * http://www.epwk.com/fuwu/?z=%E6%B2%B3%E5%8C%97%E7%9C%81&k=%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91
-         * http://www.epwk.com/fuwu/?z=河北省&k=软件开发
-         */
-        String urlOne = "http://www.epwk.com/fuwu/?z=" + areaUrl + "&k=" + nameUrl;
-        QueryWrapper <Vk> queryWrapper1 = new QueryWrapper<Vk>();
-        queryWrapper1 = queryWrapper1.eq("sort_id",id);
-        vkService.remove(queryWrapper1);
-        VkReptileUtil tit = new VkReptileUtil();
-        tit.vkGenerateInfo(urlOne,id,tCompanyService);
-        Integer a = tit.sePageUrl(urlOne)[1];               //总页数
-        if(a == 1) {
+            //将分类和地区进行转码
+            String nameUrl = ReptileUtil.urlEncodeURL(tiaojian1);
+            String areaUrl = ReptileUtil.urlEncodeURL(area);
+            System.out.println("输出："+tiaojian1+area+nameUrl+areaUrl);
+            /**
+             * http://www.epwk.com/fuwu/?z=%E6%B2%B3%E5%8C%97%E7%9C%81&k=%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91
+             * http://www.epwk.com/fuwu/?z=河北省&k=软件开发
+             */
+            String urlOne = "http://www.epwk.com/fuwu/?z=" + areaUrl + "&k=" + nameUrl;
+            QueryWrapper <Vk> queryWrapper1 = new QueryWrapper<Vk>();
+            queryWrapper1 = queryWrapper1.eq("sort_id",id);
+            vkService.remove(queryWrapper1);
+            VkReptileUtil tit = new VkReptileUtil();
+            tit.vkGenerateInfo(urlOne,id,tCompanyService);
+            Integer a = tit.sePageUrl(urlOne)[1];               //总页数
+            if(a == 1) {
 
-
-        }else{
-            Integer j = tit.sePageUrl(urlOne)[0];               //第二页k值
-            Integer k = tit.sePageUrl(urlOne)[2];               //第三页k值
-            System.out.println(a + "bbbbbbbbbbbb");
-            for (int i = 0; i <a; i++) {
-                //Integer h = j + (k * i);
-                //http://www.epwk.com/fuwu/p2.html?z=%E6%B2%B3%E5%8C%97%E7%9C%81&k=%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91
-                String urlTwo = "http://www.epwk.com/fuwu/p"+(i+1)+".html?z="+areaUrl+ "&k=" + nameUrl;
-                VkReptileUtil titTwo = new VkReptileUtil();
-                titTwo.vkGenerateInfo(urlTwo, id, tCompanyService);
+            }else{
+                Integer j = tit.sePageUrl(urlOne)[0];               //第二页k值
+                Integer k = tit.sePageUrl(urlOne)[2];               //第三页k值
+                System.out.println(a + "bbbbbbbbbbbb");
+                for (int i = 0; i <a; i++) {
+                    //Integer h = j + (k * i);
+                    //http://www.epwk.com/fuwu/p2.html?z=%E6%B2%B3%E5%8C%97%E7%9C%81&k=%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91
+                    String urlTwo = "http://www.epwk.com/fuwu/p"+(i+1)+".html?z="+areaUrl+ "&k=" + nameUrl;
+                    VkReptileUtil titTwo = new VkReptileUtil();
+                    titTwo.vkGenerateInfo(urlTwo, id, tCompanyService);
+                }
             }
         }
-        return null;
+        return "1";
     }
 
 
     /**
-     *@Author wangxudong
-     *@Description:
-     *@Date:
+     * @Author wangxudong UpdateBy：kevinlyz
+     * @Description 一品威客批量爬取数据至数据库
+     * @Date 21:03 2019-06-24
+     * @Param [request, ids]
+     * @return java.lang.String 返回状态码 1
      **/
     @RequestMapping("zbjGenerate")
     @ResponseBody
-    public String zbjGenerate(HttpServletRequest request,Long id) {
+    public String zbjGenerate(HttpServletRequest request,@RequestBody List<Long> ids) {
+        for (Long id:ids) {
+            System.out.println("生成标记i：>>>>>>>>>"+id);
+            QueryWrapper<Sort> queryWrapper = new QueryWrapper<Sort>();
+            queryWrapper = queryWrapper.eq("id",id);
+            Sort biao = sortService.getOne(queryWrapper);
 
-        QueryWrapper<Sort> queryWrapper = new QueryWrapper<Sort>();
-        queryWrapper = queryWrapper.eq("id",id);
-        Sort biao = sortService.getOne(queryWrapper);
+            String tiaojian1 = biao.getFenlei();
 
-        String tiaojian1 = biao.getFenlei();
+            Long area = biao.getAddr();
 
-        Long area = biao.getAddr();
+            //将分类进行转码
+            String nameUrl = ReptileUtil.urlEncodeURL(tiaojian1);
 
-        //将分类进行转码
-        String nameUrl = ReptileUtil.urlEncodeURL(tiaojian1);
+            String urlOne = "https://baoding.zbj.com/search/p/?type=new&kw=" + nameUrl + "&d=" + area;
+            QueryWrapper <Zbj> queryWrapper1 = new QueryWrapper<Zbj>();
+            queryWrapper1 = queryWrapper1.eq("fenlei_id",id);
+            zbjService.remove(queryWrapper1);
 
-        String urlOne = "https://baoding.zbj.com/search/p/?type=new&kw=" + nameUrl + "&d=" + area;
-        QueryWrapper <Zbj> queryWrapper1 = new QueryWrapper<Zbj>();
-        queryWrapper1 = queryWrapper1.eq("fenlei_id",id);
-        zbjService.remove(queryWrapper1);
+            ReptileUtil tit = new ReptileUtil();
+            tit.zbjGenerateInfo(urlOne,id,tCompanyService);
 
-        ReptileUtil tit = new ReptileUtil();
-        tit.zbjGenerateInfo(urlOne,id,tCompanyService);
+            Integer a = tit.sePageUrl(urlOne)[1];               //总页数
 
-        Integer a = tit.sePageUrl(urlOne)[1];               //总页数
-
-        if(a == 1) {
+            if(a == 1) {
 
 
-        }else{
-            Integer j = tit.sePageUrl(urlOne)[0];               //第二页k值
-            Integer k = tit.sePageUrl(urlOne)[2];               //第三页k值
-            System.out.println(a + "bbbbbbbbbbbb");
-            for (int i = 0; i < a; i++) {
-                Integer h = j + (k * i);
-                String urlTwo = "http://baoding.zbj.com/search/p/k" + h + ".html?type=new&kw=" + nameUrl + "&d=" + area;
-                ReptileUtil titTwo = new ReptileUtil();
-                titTwo.zbjGenerateInfo(urlTwo, id,tCompanyService);
+            }else{
+                Integer j = tit.sePageUrl(urlOne)[0];               //第二页k值
+                Integer k = tit.sePageUrl(urlOne)[2];               //第三页k值
+                System.out.println(a + "bbbbbbbbbbbb");
+                for (int i = 0; i < a; i++) {
+                    Integer h = j + (k * i);
+                    String urlTwo = "http://baoding.zbj.com/search/p/k" + h + ".html?type=new&kw=" + nameUrl + "&d=" + area;
+                    ReptileUtil titTwo = new ReptileUtil();
+                    titTwo.zbjGenerateInfo(urlTwo, id,tCompanyService);
+                }
             }
         }
-        return null;
+        return "1";
     }
 
 }

@@ -44,7 +44,7 @@
                                onclick="daochu('/admin/sort/export?id=')"
                                class="layui-btn  layui-btn-normal"><i class="Hui-iconfont">&#xe644;</i> 导出</a>
                             <a href="javascript:;"
-                               onclick="zbjGenerate('/admin/tCompany/zbjGenerate?id=')"
+                               onclick="zbjGenerate('/admin/tCompany/zbjGenerate')"
                                class="layui-btn  layui-btn-normal"><i class="Hui-iconfont">&#xe644;</i> 生成</a>
 						</span>
                         <span class="r wei-height">共有数据：<strong th:text="${pageInfo.total}"></strong> 条</span>
@@ -129,8 +129,6 @@
 
         click = 1;
 
-
-
         var _list = new Array();
         $('input[name="id"]:checked').each(
             function (i) {
@@ -168,9 +166,13 @@
     }
 
 
-//生成
+    /**
+     * @description 批量生成
+     * @author UpdateBy：kevinlyz
+     * @param url
+     * @returns {boolean}
+     */
     function zbjGenerate(url) {
-
         click = 1;
 
         var _list = new Array();
@@ -179,39 +181,36 @@
                 _list[i] = $(this).val();
             });
         if(_list.length == 0){
-            layer.msg("请选择要生成的信息");
+            layer.msg("请选择生成的数据");
             return false;
-        }
-        if(_list.length != 1){
-            layer.msg("只能生成一条信息");
-            return false;
-        }
-
-        if(_list.length == 1){
+        }else {
             var bar = document.getElementById("wrapper");
 
             bar.style.display = (bar.style.display.match("block")) ? "none" : "block";
-            setInterval(zbjGenerateBar,100);
+            setInterval(zbjGenerateBar, 100);
+
+            $.ajax({
+                url: url,// 跳转到 action
+                data: JSON.stringify(_list),
+                type: 'post',
+                cache: false,
+                dataType: 'json',
+                contentType: "application/json",  //发送信息至服务器时内容编码类型。
+                success: function (data) {
+                    if (data == "1") {
+                        flag = 1;
+                        setInterval(function(){
+                            window.location.reload();
+                        },1000);
+                    } else {
+                        layer.designMsg('生成失败!');
+                    }
+                },
+                error: function () {
+                    layer.designMsg('生成异常!', 5);
+                },
+            });
         }
-
-
-        url = url + _list[0];
-        // window.open(url);
-
-
-        $.ajax({
-            //data:{
-            //},
-            type: 'POST',
-            url: url,
-            success:function(){
-                // window.location.href=url;
-
-                flag = 1;
-                // setInterval(increment,100);
-            },
-
-        });
     }
 
     <!--导出进度条-->

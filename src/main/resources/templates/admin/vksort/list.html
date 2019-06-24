@@ -45,7 +45,7 @@
                                onclick="daochu('/admin/vksort/export?id=')"
                                class="layui-btn  layui-btn-normal"><i class="Hui-iconfont">&#xe644;</i> 导出</a>
                             <a href="javascript:;"
-                               onclick="generate('/admin/tCompany/vkGenerate?id=')"
+                               onclick="generate('/admin/tCompany/vkGenerate')"
                                class="layui-btn  layui-btn-normal"><i class="Hui-iconfont">&#xe644;</i> 生成</a>
 						</span>
                         <span class="r wei-height">共有数据：<strong th:text="${pageInfo.total}"></strong> 条</span>
@@ -60,7 +60,7 @@
                             <button type="submit"
                                     class="layui-btn  layui-btn-success radius"><i
                                         class="Hui-iconfont">&#xe665;</i> 搜索
-                            </button>
+
                         </div>
                     </div>
 
@@ -170,12 +170,15 @@
     }
 
 
-    //生成条件信息
+    /**
+     * @description 批量生成
+     * @author kevinlyz
+     * @param url
+     * @returns {boolean}
+     */
     function generate(url) {
-
         click = 1;
-
-               var _list = new Array();
+        var _list = new Array();
         $('input[name="id"]:checked').each(
             function (i) {
                 _list[i] = $(this).val();
@@ -183,39 +186,35 @@
         if(_list.length == 0){
             layer.msg("请选择要生成的信息");
             return false;
-        }
-        if(_list.length != 1){
-            layer.msg("只能生成一条信息");
-            return false;
-        }
-
-        if(_list.length == 1){
+        }else{
             var bar = document.getElementById("wrapper");
 
             bar.style.display = (bar.style.display.match("block")) ? "none" : "block";
-            setInterval(vkGenerateBar,250);
+            setInterval(vkGenerateBar, 250);
 
+            $.ajax({
+                url: url,// 跳转到 action
+                data: JSON.stringify(_list),
+                type: 'post',
+                cache: false,
+                dataType: 'json',
+                contentType: "application/json",  //发送信息至服务器时内容编码类型。
+                success: function (data) {
+                    if (data == "1") {
+                        flag = 1;
+                        setInterval(function(){
+                            window.location.reload();
+                        },1000);
+                    } else {
+                        layer.designMsg('生成失败!');
+                    }
+                },
+                error: function () {
+                    layer.designMsg('生成异常!', 5);
+                },
+            });
         }
-
-
-        url = url + _list[0];
-
-        $.ajax({
-            //data:{
-            //},
-            type: 'POST',
-            url: url,
-            success:function(){
-                // window.location.href=url;
-
-                flag = 1;
-             },
-
-        });
-
     }
-
-
 
     // 导出进度条
 

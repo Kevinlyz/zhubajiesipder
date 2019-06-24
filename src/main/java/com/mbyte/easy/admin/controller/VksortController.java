@@ -148,7 +148,6 @@ public class VksortController extends BaseController {
     @ResponseBody
     public String export(HttpServletRequest request,Long id,HttpServletResponse response) {
 
-
         QueryWrapper<Vksort> queryWrapper = new QueryWrapper<Vksort>();
         queryWrapper = queryWrapper.eq("id",id);
         Vksort biao = vksortService.getOne(queryWrapper);
@@ -156,9 +155,6 @@ public class VksortController extends BaseController {
         String tiaojian1 = biao.getSort();
 
         String area = biao.getProvince();
-
-         //String aa = null;
-
 
         //将分类和地区进行转码
         String nameUrl = ReptileUtil.urlEncodeURL(tiaojian1);
@@ -237,7 +233,6 @@ public class VksortController extends BaseController {
                 e.printStackTrace();
             }
         }
-
         return null;
     }
 

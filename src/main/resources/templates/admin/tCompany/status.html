@@ -37,40 +37,81 @@
                 <!--<input type="input-text" class="input-text" th:value="${tCompany.score}" name="score"  placeholder="修改公司评分 " id="score"/>-->
             <!--</div>-->
         <!--</div>-->
+        <!--<div class="row cl">-->
+            <!--<label class="form-label col-xs-2 col-sm-2"><span-->
+                    <!--class="c-red">*</span>销量：</label>-->
+            <!--<div class="formControls col-xs-10 col-sm-10">-->
+                <!--<input type="input-text" class="input-text" th:value="${tCompany.num}" name="num"  placeholder="修改公司销量 " id="num"/>-->
+            <!--</div>-->
+        <!--</div>-->
+                </div>
+                <!--<div class="row cl">-->
+                    <!--<label class="form-label col-xs-2 col-sm-2"><span-->
+                                <!--class="c-red">*</span>公司状态：</label>-->
+                            <!--<div class="formControls col-xs-10 col-sm-10">-->
+                                <!--<select class="input-text" name="companyStates" id="companyStates"/>-->
+                                <!--<option th:value="${tCompany.companyStates}">修改公司状态</option>-->
+                                <!--<option value=1 th:text="等待处理" th:selected="${tCompany.companyStates eq 1}"></option>-->
+                                <!--<option value=2 th:text="正在联系" th:selected="${tCompany.companyStates eq 2}"></option>-->
+                                <!--<option value=3 th:text="联系成功" th:selected="${tCompany.companyStates eq 3}"></option>-->
+                                <!--<option value=4 th:text="无法联系" th:selected="${tCompany.companyStates eq 4}"></option>-->
+                                <!--<option value=5 th:text="已废弃" th:selected="${tCompany.companyStates eq 5}"></option>-->
+                                <!--</select><br>-->
+                            <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
         <div class="row cl">
-            <label class="form-label col-xs-2 col-sm-2"><span
-                    class="c-red">*</span>销量：</label>
-            <div class="formControls col-xs-10 col-sm-10">
-                <input type="input-text" class="input-text" th:value="${tCompany.num}" name="num"  placeholder="修改公司销量 " id="num"/>
+        <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>公司状态：</label>
+        <div class="mt-20 skin-minimal">
+            <div class="radio-box " >
+                <input type="radio" id="radio-1" value="1"  th:attr="checked=${tCompany.companyStates eq 1}"
+                       name="companyStates">
+                <label for="radio-1">等待处理</label>
             </div>
-        </div>
-                </div>
-                <div class="row cl">
-                    <label class="form-label col-xs-2 col-sm-2"><span
-                                class="c-red">*</span>公司状态：</label>
-                            <div class="formControls col-xs-10 col-sm-10">
-                                <select class="input-text" name="companyStates" id="companyStates"/>
-                                <option th:value="${tCompany.companyStates}">修改公司状态</option>
-                                <option value=1 th:text="等待处理" th:selected="${tCompany.companyStates eq 1}"></option>
-                                <option value=2 th:text="正在联系" th:selected="${tCompany.companyStates eq 2}"></option>
-                                <option value=3 th:text="联系成功" th:selected="${tCompany.companyStates eq 3}"></option>
-                                <option value=4 th:text="无法联系" th:selected="${tCompany.companyStates eq 4}"></option>
-                                <option value=5 th:text="已废弃" th:selected="${tCompany.companyStates eq 5}"></option>
-                                </select><br>
-                            </div>
-                    </div>
-                </div>
-                <div class="row cl">
-                    <label class="form-label col-xs-2 col-sm-2"><span
-                                class="c-red">*</span>备注：</label>
-                            <div class="formControls col-xs-10 col-sm-10">
-                                <input type="input-text" class="input-text" th:value="${tCompany.myMarks}" name="myMarks"  placeholder="修改备注" id="myMarks"/>
-                            </div>
-                    </div>
-                </div>
+            <div class="radio-box">
+                <input type="radio" id="radio-2" value="2" th:attr="checked=${tCompany.companyStates eq 2}"
+                       name="companyStates">
+                <label for="radio-1">正在联系</label>
+            </div>
+            <div class="radio-box">
+                <input type="radio" id="radio-3" value="3"  th:attr="checked=${tCompany.companyStates eq 3}"
+                       name="companyStates">
+                <label for="radio-1">联系成功</label>
+            </div>
+            <div class="radio-box">
+                <input type="radio" id="radio-4" value="4"  th:attr="checked=${tCompany.companyStates eq 4}"
+                       name="companyStates">
+                <label for="radio-1">无法联系</label>
+            </div>
+            <div class="radio-box">
+                <input type="radio" id="radio-5" value="4" th:attr="checked=${tCompany.companyStates eq 5}"
+                       name="companyStates">
+                <label for="radio-1">已废弃</label>
+            </div>
+            <!--<div class="radio-box" >-->
+                <!--<input type="radio" id="radio-2" name="companyStates" checked>-->
+                <!--<label for="radio-2"正在联系</label>-->
+            <!--</div>-->
+            <!--<div class="radio-box">-->
+                <!--<input type="radio" id="radio-disabled" disabled>-->
+                <!--<label for="radio-disabled">Disabled</label>-->
+            <!--</div><br><br>-->
+            <!--<div class="radio-box">-->
+                <!--<input type="radio" id="radio-disabled-checked" checked disabled>-->
+                <!--<label for="radio-disabled-checked">Disabled &amp; checked</label>-->
+            <!--</div>-->
+        </div></div><br><br>
+                <!--<div class="row cl">-->
+                    <!--<label class="form-label col-xs-2 col-sm-2"><span-->
+                                <!--class="c-red">*</span>备注：</label>-->
+                            <!--<div class="formControls col-xs-10 col-sm-10">-->
+                                <!--<input type="input-text" class="input-text" th:value="${tCompany.myMarks}" name="myMarks"  placeholder="修改备注" id="myMarks"/>-->
+                            <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
         <div class="row cl">
             <div class="col-xs-3 col-sm-3 col-xs-offset-4 col-sm-offset-3">
-                <input class="btn btn-primary radius" id="subbtn" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;"/>
+                <input class="btn btn-primary radius" id="subbtn" type="submit" value="&nbsp;&nbsp;确认&nbsp;&nbsp;"/>
                 <input class="btn radius" id="reset" type="reset" value="&nbsp;&nbsp;重置&nbsp;&nbsp;"/>
             </div>
         </div>
@@ -82,7 +123,20 @@
 <!--/_footer 作为公共模版分离出去-->
 <!--请在下方写此页面业务相关的脚本-->
 <script>
+    $(function(){
+        $('.skin-minimal input').iCheck({
+            checkboxClass: 'icheckbox-blue',
+            radioClass: 'iradio-blue',
+            increaseArea: '20%'
+        })});
     $(function () {
+
+        $('.skin-minimal input').iCheck({
+            checkboxClass: 'icheckbox-blue',
+            radioClass: 'iradio-blue',
+            increaseArea: '20%'
+        })
+
         $("#form-tCompany-edit").validate({
             rules: {
         companyName:
