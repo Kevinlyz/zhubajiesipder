@@ -165,7 +165,6 @@ public class SortController extends BaseController {
         Integer a = tit.sePageUrl(urlOne)[1];               //总页数
 
         if(a == 1) {
-
             //导出excel
             String tableid = request.getParameter("id");
             QueryWrapper<Zbj> queryWrapper2 = new QueryWrapper<Zbj>();

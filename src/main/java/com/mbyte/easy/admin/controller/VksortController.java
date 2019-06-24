@@ -170,7 +170,6 @@ public class VksortController extends BaseController {
          * http://www.epwk.com/fuwu/?z=%E6%B2%B3%E5%8C%97%E7%9C%81&k=%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91
          * http://www.epwk.com/fuwu/?z=河北省&k=软件开发
          */
-
         String urlOne = "http://www.epwk.com/fuwu/?z=" + areaUrl + "&k=" + nameUrl;
         QueryWrapper <Vk> queryWrapper1 = new QueryWrapper<Vk>();
         queryWrapper1 = queryWrapper1.eq("sort_id",id);
@@ -180,16 +179,14 @@ public class VksortController extends BaseController {
         tit.geInfo(urlOne,id,vkService);
 
         Integer a = tit.sePageUrl(urlOne)[1];               //总页数
-
         if(a == 1) {
-
             //导出excel
             String tableid = request.getParameter("id");
             QueryWrapper<Vk> queryWrapper2 = new QueryWrapper<Vk>();
             queryWrapper2 = queryWrapper2.eq("sort_id", tableid);
 
             String sk = "一品威客"+area+tiaojian1+"类别信息表";
-            String[] rowsName = new String[]{"序号", "标题","价格", "公司名称", "公司类型","地址", "链接", "任务类型", "成交量", "综合评分"};
+            String[] rowsName = new String[]{"序号", "标题","价格",  "公司类型","地址", "链接", "任务类型", "成交量", "综合评分"};
             String filename1 = "一品威客"+area+tiaojian1+"类别信息表";
             ExportExcel ex = new ExportExcel(sk, rowsName);
             try {
@@ -199,9 +196,7 @@ public class VksortController extends BaseController {
                 List<Vk> infoList = vkService.selectAll(Long.valueOf(tableid));
                 ex.exportPersonInfo1(filename1, infoList);
                 ex.saveExcel(response);
-
                 //aa = "1";
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -224,7 +219,7 @@ public class VksortController extends BaseController {
             queryWrapper2 = queryWrapper2.eq("sort_id", tableid);
 
             String sk = "一品威客"+area+tiaojian1+"类别信息表";
-            String[] rowsName = new String[]{"序号", "标题","价格", "公司名称","公司类型", "地址", "链接", "任务类型", "成交量", "综合评分"};
+            String[] rowsName = new String[]{"序号", "标题","价格", "公司类型", "地址", "链接", "任务类型", "成交量", "综合评分"};
             String filename1 = "一品威客"+area+tiaojian1+"类别信息表";
             ExportExcel ex = new ExportExcel(sk, rowsName);
             try {

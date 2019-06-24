@@ -216,7 +216,7 @@ public class ExportExcel {
                 cell3.setCellValue(dataList.get(i).getPrice());
 
                 HSSFCell cell4 = row.createCell(3, HSSFCell.CELL_TYPE_STRING);
-                cell4.setCellStyle(numberStyle);
+                cell4.setCellStyle(style);
                 cell4.setCellValue(dataList.get(i).getCompany());
 
                 HSSFCell cell5 = row.createCell(4, HSSFCell.CELL_TYPE_STRING);

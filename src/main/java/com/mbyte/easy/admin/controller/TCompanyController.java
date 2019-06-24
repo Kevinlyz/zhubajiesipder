@@ -157,6 +157,12 @@ public class TCompanyController extends BaseController  {
         return toAjax(tCompanyService.removeByIds(ids));
     }
 
+    @RequestMapping("editStatusBefore/{id}")
+    public String editStatusBefore(Model model,@PathVariable("id")Long id){
+        model.addAttribute("tCompany",tCompanyService.getById(id));
+        return prefix+"status";
+    }
+
     /**
      *@Author wangxudong
      *@Description:
@@ -165,37 +171,27 @@ public class TCompanyController extends BaseController  {
     @RequestMapping("vkGenerate")
     @ResponseBody
        public String vkGenerate(HttpServletRequest request, Long id) {
-
         QueryWrapper<Vksort> queryWrapper = new QueryWrapper<Vksort>();
         queryWrapper = queryWrapper.eq("id",id);
         Vksort biao = vksortService.getOne(queryWrapper);
-
         String tiaojian1 = biao.getSort();
-
         String area = biao.getProvince();
-
 
         //将分类和地区进行转码
         String nameUrl = ReptileUtil.urlEncodeURL(tiaojian1);
         String areaUrl = ReptileUtil.urlEncodeURL(area);
-
         System.out.println("输出："+tiaojian1+area+nameUrl+areaUrl);
-
         /**
          * http://www.epwk.com/fuwu/?z=%E6%B2%B3%E5%8C%97%E7%9C%81&k=%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91
          * http://www.epwk.com/fuwu/?z=河北省&k=软件开发
          */
-
         String urlOne = "http://www.epwk.com/fuwu/?z=" + areaUrl + "&k=" + nameUrl;
         QueryWrapper <Vk> queryWrapper1 = new QueryWrapper<Vk>();
         queryWrapper1 = queryWrapper1.eq("sort_id",id);
         vkService.remove(queryWrapper1);
-
         VkReptileUtil tit = new VkReptileUtil();
         tit.vkGenerateInfo(urlOne,id,tCompanyService);
-
         Integer a = tit.sePageUrl(urlOne)[1];               //总页数
-
         if(a == 1) {
 
 
@@ -203,18 +199,14 @@ public class TCompanyController extends BaseController  {
             Integer j = tit.sePageUrl(urlOne)[0];               //第二页k值
             Integer k = tit.sePageUrl(urlOne)[2];               //第三页k值
             System.out.println(a + "bbbbbbbbbbbb");
-
             for (int i = 0; i <a; i++) {
-
                 //Integer h = j + (k * i);
                 //http://www.epwk.com/fuwu/p2.html?z=%E6%B2%B3%E5%8C%97%E7%9C%81&k=%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91
                 String urlTwo = "http://www.epwk.com/fuwu/p"+(i+1)+".html?z="+areaUrl+ "&k=" + nameUrl;
                 VkReptileUtil titTwo = new VkReptileUtil();
                 titTwo.vkGenerateInfo(urlTwo, id, tCompanyService);
             }
-
         }
-
         return null;
     }
 
@@ -256,18 +248,13 @@ public class TCompanyController extends BaseController  {
             Integer j = tit.sePageUrl(urlOne)[0];               //第二页k值
             Integer k = tit.sePageUrl(urlOne)[2];               //第三页k值
             System.out.println(a + "bbbbbbbbbbbb");
-
             for (int i = 0; i < a; i++) {
-
                 Integer h = j + (k * i);
                 String urlTwo = "http://baoding.zbj.com/search/p/k" + h + ".html?type=new&kw=" + nameUrl + "&d=" + area;
                 ReptileUtil titTwo = new ReptileUtil();
                 titTwo.zbjGenerateInfo(urlTwo, id,tCompanyService);
-
             }
-
         }
-
         return null;
     }
 

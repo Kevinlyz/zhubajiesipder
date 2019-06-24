@@ -26,28 +26,25 @@ import java.util.regex.Pattern;
  */
 public class ReptileUtil {
 
-
-
     /**
      * 字符串中提取数字
      */
-    public void enNum(String url){
+    public void enNum(String url) {
         String regEx = "[^0-9]";
         Pattern p = Pattern.compile(regEx);
         Matcher m = p.matcher(url);
-        System.out.println( m.replaceAll("").trim());
-
+        System.out.println(m.replaceAll("").trim());
     }
 
     /**
      * 将汉字转码
+     *
      * @param tiao
      * @return
      */
     public static String urlEncodeURL(String tiao) {
         try {
-
-            String result = URLEncoder.encode( tiao, "UTF-8");
+            String result = URLEncoder.encode(tiao, "UTF-8");
             result = result.replaceAll("%3A", ":").replaceAll("%2F", "/").replaceAll("\\+", "%20");//+实际上是 空格 url encode而来
             return result;
         } catch (UnsupportedEncodingException e) {
@@ -64,8 +61,8 @@ public class ReptileUtil {
         Integer[] arr = new Integer[3];
         try {
             doc = Jsoup.connect(pageUrl).get();
-            Elements listDiv = doc.getElementsByAttributeValue("class","pagination");
-            for (Element text: listDiv) {
+            Elements listDiv = doc.getElementsByAttributeValue("class", "pagination");
+            for (Element text : listDiv) {
                 Elements a = text.getElementsByTag("a");
                 Elements p = text.getElementsByTag("p");
 
@@ -83,12 +80,10 @@ public class ReptileUtil {
                 String d = m.replaceAll("").trim();               //只保留第二页的数字
                 String e = n.replaceAll("").trim();               //只保留第三页的数字
                 String w = h.replaceAll("").trim();               //只保留总页数的数字
-
                 Integer t = Integer.valueOf(w);
                 arr[1] = t;
 
-                if(t > 1) {
-
+                if (t > 1) {
                     String z = d.substring(0, 2);
                     String q = e.substring(0, 2);
                     Integer i = Integer.valueOf(z);
@@ -97,7 +92,6 @@ public class ReptileUtil {
                     arr[0] = i;
                     arr[2] = g;
                 }
-
             }
         } catch (IOException e) {
             // TODO Auto-generated catch block
@@ -109,115 +103,87 @@ public class ReptileUtil {
 
     /**
      * 爬取详细信息
+     *
      * @param url
      */
     public void geInfo(String url, Long id, IZbjService zbjService) {
-
         Document doc = null;
         try {
             //获取html文件
             doc = Jsoup.connect(url).get();
-
-            Elements listDiv = doc.getElementsByAttributeValue("class", "witkey-info");
-
-                for (Element text : listDiv) {
-
-                    Elements a = text.getElementsByTag("a");                       //公司名称
-                    Elements s0 = text.getElementsByClass("city-icon");           //所在地区
-                    Elements s1 = text.getElementsByClass("score");               //综合评分
-                    Elements s2 = text.getElementsByAttribute("title");                 //所属类型
-                    Elements s3 = text.getElementsByClass("bz-border");           //信誉度
-
-                    Zbj zbj = new Zbj();
-
-                    zbj.setFenleiId(id);
-
-                    zbj.setName(a.get(1).text());
-
-                    zbj.setAddr(s0.text());
-
-                    String html = a.get(1).attr("href");
-                    String ht = "https:";
-                    String link = ht.concat(html);
-                    zbj.setLink(link);
-
-                    zbj.setType(s2.get(0).html());
-
-                    if(s3.text().equals("")){
-                        zbj.setCredit(0);
-                    }else{
-                        zbj.setCredit(Integer.parseInt(s3.text()));
-                    }
-
-
-                    zbj.setScore(s1.get(0).html());
-
-                    zbjService.save(zbj);
-
+            Elements listDiv = doc.getElementsByAttributeValue("class", "witkey-item");
+            for (Element text : listDiv) {
+                Elements a = text.getElementsByAttributeValue("class", "title text-overflow");     //公司名称
+                Elements s0 = text.getElementsByAttributeValue("class", "ico city-icon");          //所在地区
+                Elements s1 = text.getElementsByClass("witkey-shopyears");               //综合评分
+                Elements s2 = text.getElementsByAttributeValue("class", "witkey-hd");              //所属类型
+                Elements s3 = text.getElementsByAttributeValue("class", "ico bz-border");          //信誉度
+                Elements s4 = text.getElementsByAttributeValue("class", "name");                   //链接
+                if (a.size() == 0){
+                    continue;
                 }
-
+                Zbj zbj = new Zbj();
+                zbj.setFenleiId(id);
+                zbj.setName(a.text());
+                zbj.setAddr(s0.text());
+                zbj.setLink("https:"+s4.attr("data-href"));
+                zbj.setType(s2.get(0).child(1).text());
+                if (s3.text().equals("")) {
+                    zbj.setCredit(0);
+                } else {
+                    zbj.setCredit(Integer.parseInt(s3.text()));
+                }
+                zbj.setScore(s1.get(0).child(1).text().replaceAll("好评率：",""));
+                zbjService.save(zbj);
+            }
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
-
     }
 
     /**
-     *@Author wangxudong
-     *@Description: 生成信息
-     *@Date:
+     * @Author wangxudong
+     * @Description: 生成信息
+     * @Date:
      **/
-
     public void zbjGenerateInfo(String url, Long id, ITCompanyService tCompanyService) {
-
         Document doc = null;
         try {
             //获取html文件
             doc = Jsoup.connect(url).get();
-
-            Elements listDiv = doc.getElementsByAttributeValue("class", "witkey-info");
-
+            Elements listDiv = doc.getElementsByAttributeValue("class", "witkey-item");
             for (Element text : listDiv) {
-                Elements a = text.getElementsByTag("a");                       //公司名称
-                Elements s0 = text.getElementsByClass("city-icon");           //所在地区
-                Elements s1 = text.getElementsByClass("score");               //综合评分
-                Elements s2 = text.getElementsByAttribute("title");                 //所属类型
-                Elements s3 = text.getElementsByClass("bz-border");           //信誉度
-
-                if (s2 != null && s2.get(0).html().equals("企业")) {
+                Elements a  = text.getElementsByAttributeValue("class", "title text-overflow");     //公司名称
+                Elements s0 = text.getElementsByAttributeValue("class", "ico city-icon");          //所在地区
+                Elements s1 = text.getElementsByClass("witkey-shopyears");               //综合评分
+                Elements s2 = text.getElementsByAttributeValue("class", "witkey-hd");              //所属类型
+                Elements s3 = text.getElementsByAttributeValue("class", "ico bz-border");          //信誉度
+                Elements s4 = text.getElementsByAttributeValue("class", "name");                   //链接
+                if (a.size() == 0){
+                    continue;
+                }
+                if (s2 != null && s2.get(0).child(1).text().equals("企业")) {
                     TCompany tCompany = new TCompany();
-                    tCompany.setCompanyName(a.get(1).text());
+                    tCompany.setCompanyName(a.text());
                     tCompany.setCompanyStates(1);
-                    String html = a.get(1).attr("href");
-                    String ht = "https:";
-                    String link = ht.concat(html);
-                    tCompany.setCompanyUrl(link);
+                    tCompany.setCompanyUrl("https:"+s4.attr("data-href"));
                     tCompany.setNum(0);
+                    tCompany.setScore(s1.get(0).child(1).text().replaceAll("好评率：",""));
                     if (s3.text().equals("")) {
                         tCompany.setCredit(0);
                     } else {
                         tCompany.setCredit(Integer.parseInt(s3.text()));
                     }
-
-                    tCompany.setScore(String.valueOf(Math.round(Float.parseFloat(s1.get(0).html())*20*10)/10));
-
-
-                    if (tCompanyService.selectByUrl(html) == null) {
+                    if (tCompanyService.selectByUrl("https:"+s4.attr("data-href")) == null) {
                         tCompanyService.save(tCompany);
                     }
-
                 }
-
             }
 
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
-
     }
 
 }
