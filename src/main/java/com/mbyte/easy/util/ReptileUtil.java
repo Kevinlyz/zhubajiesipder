@@ -133,7 +133,7 @@ public class ReptileUtil {
                 } else {
                     zbj.setCredit(Integer.parseInt(s3.text()));
                 }
-                zbj.setScore(s1.get(0).child(1).text().replaceAll("好评率：",""));
+                zbj.setScore(s1.get(0).child(1).text().replaceAll("好评率：","").replaceAll("%",""));
                 zbjService.save(zbj);
             }
         } catch (IOException e) {
@@ -168,7 +168,7 @@ public class ReptileUtil {
                     tCompany.setCompanyStates(1);
                     tCompany.setCompanyUrl("https:"+s4.attr("data-href"));
                     tCompany.setNum(0);
-                    tCompany.setScore(s1.get(0).child(1).text().replaceAll("好评率：",""));
+                    tCompany.setScore(s1.get(0).child(1).text().replaceAll("好评率：","").replaceAll("%",""));
                     if (s3.text().equals("")) {
                         tCompany.setCredit(0);
                     } else {

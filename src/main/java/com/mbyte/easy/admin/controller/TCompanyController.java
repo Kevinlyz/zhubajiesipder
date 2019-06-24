@@ -73,7 +73,7 @@ public class TCompanyController extends BaseController  {
             queryWrapper = queryWrapper.like("company_url",tCompany.getCompanyUrl());
          }
         if(!ObjectUtils.isEmpty(tCompany.getCompanyStates())) {
-            queryWrapper = queryWrapper.like("company_states",tCompany.getCompanyStates());
+            queryWrapper = queryWrapper.eq("company_states",tCompany.getCompanyStates());
          }
         if(!ObjectUtils.isEmpty(tCompany.getMyMarks())) {
             queryWrapper = queryWrapper.like("my_marks",tCompany.getMyMarks());
@@ -92,6 +92,8 @@ public class TCompanyController extends BaseController  {
             else {queryWrapper.orderByDesc("num");}
         }
 
+//        queryWrapper.orderByDesc("id");
+        queryWrapper.orderByAsc("company_states");
         queryWrapper.orderByDesc("id");
         IPage<TCompany> pageInfo = tCompanyService.page(page, queryWrapper);
         model.addAttribute("searchInfo", tCompany);
